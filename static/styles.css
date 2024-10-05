@@ -1,0 +1,59 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    margin: 0;
+    padding: 0;
+}
+
+.container {
+    max-width: 600px;
+    margin: 50px auto;
+    padding: 20px;
+    background-color: #fff;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+h1 {
+    color: #4BA82E; /* Škoda green */
+}
+
+button {
+    background-color: #4BA82E; /* Škoda green */
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+    font-size: 16px;
+    border-radius: 5px;
+    width: 100%; /* Match width of other controls */
+    margin-top: 20px; /* Add space between dropdowns and button */
+}
+
+button:hover {
+    background-color: #3e8e24; /* Darker shade of Škoda green */
+}
+
+label {
+    display: block;
+    margin-top: 10px;
+}
+
+input, select, textarea {
+    width: 100%;
+    padding: 8px;
+    margin-top: 5px;
+    box-sizing: border-box;
+}
+
+#iframe-result {
+    margin-top: 20px;
+}
+
+#iframe-code-container {
+    margin-top: 20px;
+}
+
+#iframe-code {
+    margin-top: 10px;
+    height: 100px;
+}
