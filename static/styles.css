@@ -13,8 +13,21 @@ body {
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-bottom: 15px; /* Added padding between header and language dropdown */
+}
+
 h1 {
     color: #4BA82E; /* Škoda green */
+    margin: 0;
+}
+
+.language-selector {
+    width: 33.33%;
+    min-width: 50px;
 }
 
 button {
@@ -45,6 +58,13 @@ input, select, textarea {
     box-sizing: border-box;
 }
 
+.result-container {
+    margin-top: 20px;
+    padding: 20px;
+    background-color: #fff;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
 #iframe-result {
     margin-top: 20px;
 }
@@ -56,4 +76,60 @@ input, select, textarea {
 #iframe-code {
     margin-top: 10px;
     height: 100px;
+}
+
+/* New styles for the learn_more paragraph */
+#info {
+    margin-top: 20px;
+    text-align: center;
+}
+
+#info p a {
+    color: #4BA82E; /* Škoda green */
+    text-decoration: none;
+}
+
+#info p a:hover {
+    text-decoration: underline;
+}
+
+/* Styles for the embed code section */
+#embed-code-container {
+    margin-top: 20px;
+    padding: 20px;
+    background-color: #f9f9f9;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}
+
+.embed-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+#embed-code-container h3 {
+    margin: 0;
+}
+
+#embed-code {
+    width: 100%;
+    height: 100px;
+    padding: 10px;
+    box-sizing: border-box;
+    margin-top: 10px;
+}
+
+#embed-code-container button {
+    background-color: #4BA82E; /* Škoda green */
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+    font-size: 16px;
+    border-radius: 5px;
+}
+
+#embed-code-container button:hover {
+    background-color: #3e8e24; /* Darker shade of Škoda green */
 }

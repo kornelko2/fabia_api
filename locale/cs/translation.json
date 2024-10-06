@@ -1,0 +1,41 @@
+{
+    "title": "Škoda Fabia 1.2 HTP Převodník jednotek",
+    "description": "Převádějte různé fyzikální jednotky na ekvivalentní počet jednotek Škoda Fabia 1.2 HTP.",
+    "value_label": "Hodnota:",
+    "conversion_type_label": "Typ převodu:",
+    "unit_label": "Jednotka:",
+    "scenario_label": "Scénář:",
+    "convert_button": "Převést",
+    "learn_more": "Zjistěte více o <a href=\"https://www.auto.cz/skoda-fabia-slavi-20-let-pripomente-si-jeji-prvni-generaci-131124\" target=\"_blank\">Škoda Fabia 1.2 HTP</a>",
+    "generate_embed_code": "Generovat kód pro vložení",
+    "language_label": "Jazyk:",
+    "explanation_style_label": "Styl vysvětlení:",
+    "scientific": "Vědecký",
+    "funny": "Vtipný",
+    "conversion_types": {
+        "mass": "Hmotnost",
+        "length": "Délka",
+        "width": "Šířka",
+        "height": "Výška",
+        "area": "Plocha",
+        "power": "Výkon"
+    },
+    "scenarios": {
+        "packed": "nacpaných nas sebe jako sardinky",
+        "parking_lot": "zaparkovaných na parkovišti"
+    },
+    "result": "Výsledek:",
+    "languages": {
+        "en": "Angličtina",
+        "cs": "Čeština",
+        "de": "Němčina",
+        "es": "Španělština",
+        "fr": "Francouzština"
+    },
+    "conversion_result": {
+        "scientific": "Hodnota {value} {unit} odpovídá {result} jednotkám Škoda Fabia 1.2 HTP ve scénáři {scenario}.",
+        "funny": "No ty Vole! {value} {unit} je {result} Škoda Fabia 1.2 HTP ve scénáři {scenario}!"
+    },
+    "embed_header": "Vložit tento převodník",
+    "copy_embed_button": "Kopírovat kód pro vložení"
+}

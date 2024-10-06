@@ -1,6 +1,9 @@
 import pytest
 from fastapi.testclient import TestClient
-from main import app, SKODA_FABIA_AREA_M2, SKODA_FABIA_POWER_KW
+from unittest.mock import patch, mock_open
+
+import requests
+from main import app, SKODA_FABIA_AREA_M2, SKODA_FABIA_POWER_KW, load_translations
 
 client = TestClient(app)
 
@@ -70,3 +73,36 @@ def test_convert_power_hp():
     assert response.status_code == 200
     expected_value = 125.98 * 0.7457 / SKODA_FABIA_POWER_KW
     assert response.json()["fabia_units"] == pytest.approx(expected_value, rel=1e-2)
+    
+def test_load_translations_en():
+    mock_translation = '{"title": "Škoda Fabia 1.2 HTP Unit Converter"}'
+    with patch("builtins.open", mock_open(read_data=mock_translation)):
+        translations = load_translations("en")
+        assert translations["title"] == "Škoda Fabia 1.2 HTP Unit Converter"
+
+def test_load_translations_de():
+    mock_translation_de = '{"title": "Škoda Fabia 1.2 HTP Einheitenumrechner"}'
+    with patch("builtins.open", mock_open(read_data=mock_translation_de)):
+        translations = load_translations("de")
+        assert translations["title"] == "Škoda Fabia 1.2 HTP Einheitenumrechner"
+
+def test_load_translations_fallback():
+    mock_translation_en = '{"title": "Škoda Fabia 1.2 HTP Unit Converter"}'
+    with patch("builtins.open", mock_open(read_data=mock_translation_en)) as mock_file:
+        mock_file.side_effect = [FileNotFoundError(), mock_file.return_value]
+        translations = load_translations("de")
+        assert translations["title"] == "Škoda Fabia 1.2 HTP Unit Converter"
+        assert mock_file.call_count == 2
+        
+def test_embed_area_conversion():
+    url = "http://127.0.0.1:8000/embed?value=10000&conversion_type=area&unit=m2&scenario=parking_lot&lng=de&explanation=funny"
+    response = client.get(url)
+    assert response.status_code == 200
+    assert "<p>Wow! 10000.0 m2 ist wie 800.0 Škoda Fabia 1.2 HTPs im Parkplatz Szenario!</p>" in response.text
+    
+def test_embed_area_conversion_cs():
+    url = "http://127.0.0.1:8000/embed?value=10000&conversion_type=area&unit=m2&scenario=parking_lot&lng=cs&explanation=funny"
+    response = client.get(url)
+    assert response.status_code == 200
+    assert "<p>Wow! 10000.0 m2 je jako 800.0 Škoda Fabia 1.2 HTP ve scénáři parkoviště!</p>" in response.text
+    

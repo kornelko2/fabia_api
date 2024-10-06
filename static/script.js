@@ -5,7 +5,6 @@ document.addEventListener('DOMContentLoaded', function() {
     const valueInput = document.getElementById('value');
     const languageSelect = document.getElementById('language');
     const explanationSelect = document.getElementById('explanation');
-    const iframeCodeTextarea = document.getElementById('iframe-code');
 
     const unitOptions = {
         mass: ['kg', 't', 'g', 'mg', 'lbs', 'oz'],
@@ -49,21 +48,17 @@ document.addEventListener('DOMContentLoaded', function() {
         const unit = document.getElementById('unit').value;
         const value = valueInput.value;
         const scenario = document.getElementById('scenario').value;
+        const language = languageSelect.value;
+        const explanation = explanationSelect.value;
 
-        let apiUrl = `/convert/${conversionType}/${value}?unit=${unit}`;
-
-        if (conversionType === 'area') {
-            apiUrl += `&scenario=${scenario}`;
-        }
+        // Construct the URL for the embed endpoint
+        const url = `/embed?value=${value}&conversion_type=${conversionType}&unit=${unit}&scenario=${scenario}&lng=${language}&explanation=${explanation}`;
 
         try {
-            const response = await fetch(apiUrl);
-            const result = await response.json();
+            const response = await fetch(url);
+            const result = await response.text();
 
-            document.getElementById('result').innerHTML = `
-                <h2>Result</h2>
-                <p>${new Intl.NumberFormat().format(value)} ${unit} ${conversionType} is approximately ${new Intl.NumberFormat().format(result.fabia_units)} Škoda Fabia 1.2 HTP units.</p>
-            `;
+            document.getElementById('result').innerHTML = result;
         } catch (error) {
             document.getElementById('result').innerHTML = `
                 <h2>Error</h2>
@@ -72,21 +67,39 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 
-    document.getElementById('generate-iframe').addEventListener('click', function() {
-        const conversionType = document.getElementById('conversion-type').value;
-        const unit = document.getElementById('unit').value;
-        const value = valueInput.value;
-        const scenario = document.getElementById('scenario').value;
-        const language = languageSelect.value;
-        const explanation = explanationSelect.value;
+    // Initialize i18next for translations
+    i18next
+        .use(i18nextBrowserLanguageDetector)
+        .use(i18nextHttpBackend)
+        .init({
+            fallbackLng: 'en',
+            debug: true,
+            backend: {
+                loadPath: '/locale/{{lng}}/translation.json'
+            }
+        }, function(err, t) {
+            if (err) {
+                console.error('Error loading translations:', err);
+            } else {
+                // Initialize the UI with the translated text
+                document.querySelectorAll('[data-i18n]').forEach(function(element) {
+                    element.innerHTML = t(element.getAttribute('data-i18n'));
+                });
+            }
+        });
 
-        let iframeSrc = `/convert/${conversionType}/${value}?unit=${unit}&language=${language}&explanation=${explanation}`;
-
-        if (conversionType === 'area') {
-            iframeSrc += `&scenario=${scenario}`;
-        }
-
-        const iframeCode = `<iframe src="${iframeSrc}" width="600" height="400"></iframe>`;
-        iframeCodeTextarea.value = iframeCode;
+    // Handle language change
+    languageSelect.addEventListener('change', function() {
+        const selectedLanguage = this.value;
+        i18next.changeLanguage(selectedLanguage, function(err, t) {
+            if (err) {
+                console.error('Error changing language:', err);
+            } else {
+                // Update the UI with the new language
+                document.querySelectorAll('[data-i18n]').forEach(function(element) {
+                    element.innerHTML = t(element.getAttribute('data-i18n'));
+                });
+            }
+        });
     });
 });

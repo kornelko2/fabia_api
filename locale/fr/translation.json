@@ -1,0 +1,41 @@
+{
+    "title": "Convertisseur d'unités Škoda Fabia 1.2 HTP",
+    "description": "Convertissez diverses unités physiques en nombre équivalent d'unités Škoda Fabia 1.2 HTP.",
+    "value_label": "Valeur:",
+    "conversion_type_label": "Type de conversion:",
+    "unit_label": "Unité:",
+    "scenario_label": "Scénario:",
+    "convert_button": "Convertir",
+    "learn_more": "En savoir plus sur <a href=\"https://www.auto.cz/skoda-fabia-slavi-20-let-pripomente-si-jeji-prvni-generaci-131124\" target=\"_blank\">Škoda Fabia 1.2 HTP</a>",
+    "generate_embed_code": "Générer le code d'intégration",
+    "language_label": "Langue:",
+    "explanation_style_label": "Style d'explication:",
+    "scientific": "Scientifique",
+    "funny": "Drôle",
+    "conversion_types": {
+        "mass": "Masse",
+        "length": "Longueur",
+        "width": "Largeur",
+        "height": "Hauteur",
+        "area": "Surface",
+        "power": "Puissance"
+    },
+    "scenarios": {
+        "packed": "emballé",
+        "parking_lot": "parking"
+    },
+    "result": "Résultat:",
+    "languages": {
+        "en": "Anglais",
+        "cs": "Tchèque",
+        "de": "Allemand",
+        "es": "Espagnol",
+        "fr": "Français"
+    },
+    "conversion_result": {
+        "scientific": "La valeur de {value} {unit} correspond à {result} unités de Škoda Fabia 1.2 HTP dans le scénario {scenario}.",
+        "funny": "Wow! {value} {unit} est comme {result} Škoda Fabia 1.2 HTP dans le scénario {scenario}!"
+    },
+    "embed_header": "Intégrer ce convertisseur",
+    "copy_embed_button": "Copier le code d'intégration"
+}

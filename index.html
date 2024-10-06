@@ -3,70 +3,129 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Škoda Fabia 1.2 HTP Unit Converter</title>
-    <link rel="icon" href="/static/skoda.svg" type="image/svg">
+    <title data-i18n="title">Škoda Fabia 1.2 HTP Unit Converter</title>
+    <link rel="icon" href="/static/skoda_green.svg" type="image/png">
     <link rel="stylesheet" href="/static/styles.css">
 </head>
 <body>
     <div class="container">
-        <h1>Škoda Fabia 1.2 HTP Unit Converter</h1>
-        <p>Convert various physical units to the equivalent number of Škoda Fabia 1.2 HTP units.</p>
-        <form id="converter-form">
-            <label for="value">Value:</label>
+        <div>
+            <select id="language" name="language" class="language-selector">
+                <option value="en" data-i18n="languages.en">EN</option>
+                <option value="cs" data-i18n="languages.cs">CS</option>
+                <option value="de" data-i18n="languages.de">DE</option>
+                <option value="es" data-i18n="languages.es">ES</option>
+                <option value="fr" data-i18n="languages.fr">FR</option>
+            </select>
+        </div>
+        <div>
+            <br>
+        </div>
+        <div class="header">
+            <h1 data-i18n="title">Škoda Fabia 1.2 HTP Unit Converter</h1>
+        </div>
+        <p data-i18n="description">Convert various physical units to the equivalent number of Škoda Fabia 1.2 HTP units.</p>
+        <form id="converter-form" onsubmit="generateEmbedCode(event)">
+            <label for="value" data-i18n="value_label">Value:</label>
             <input type="number" id="value" name="value" required>
 
-            <label for="conversion-type">Conversion Type:</label>
+            <label for="conversion-type" data-i18n="conversion_type_label">Conversion Type:</label>
             <select id="conversion-type" name="conversion-type" required>
-                <option value="mass">Mass</option>
-                <option value="length">Length</option>
-                <option value="width">Width</option>
-                <option value="height">Height</option>
-                <option value="area">Area</option>
-                <option value="power">Power</option>
+                <option value="mass" data-i18n="conversion_types.mass">Mass</option>
+                <option value="length" data-i18n="conversion_types.length">Length</option>
+                <option value="width" data-i18n="conversion_types.width">Width</option>
+                <option value="height" data-i18n="conversion_types.height">Height</option>
+                <option value="area" data-i18n="conversion_types.area">Area</option>
+                <option value="power" data-i18n="conversion_types.power">Power</option>
             </select>
 
-            <label for="unit">Unit:</label>
+            <label for="unit" data-i18n="unit_label">Unit:</label>
             <select id="unit" name="unit" required>
                 <!-- Options will be dynamically populated based on conversion type -->
             </select>
 
             <div id="scenario-container" style="display: none;">
-                <label for="scenario">Scenario:</label>
+                <label for="scenario" data-i18n="scenario_label">Scenario:</label>
                 <select id="scenario" name="scenario">
-                    <option value="packed">Packed</option>
-                    <option value="parking_lot">Parking Lot</option>
+                    <option value="packed" data-i18n="scenarios.packed">Packed</option>
+                    <option value="parking_lot" data-i18n="scenarios.parking_lot">Parking Lot</option>
                 </select>
             </div>
 
-            <button type="submit">Convert</button>
+            <label for="explanation" data-i18n="explanation_style_label">Explanation Style:</label>
+            <select id="explanation" name="explanation">
+                <option value="scientific" data-i18n="scientific">Scientific</option>
+                <option value="funny" data-i18n="funny">Funny</option>
+            </select>
+
+            <button type="submit" data-i18n="convert_button">Convert</button>
         </form>
 
-        <div id="result"></div>
-        <div id="info">
-            <p>Learn more about <a href="https://www.auto.cz/skoda-fabia-slavi-20-let-pripomente-si-jeji-prvni-generaci-131124" target="_blank">Škoda Fabia 1.2 HTP</a></p>
+        <div id="result" class="result-container"></div>
+
+        <!-- Embed Code Section -->
+        <div id="embed-code-container" style="display: none;">
+            <div class="embed-header">
+                <h3 data-i18n="embed_header">Embed This Converter</h3>
+                <button onclick="copyEmbedCode()" data-i18n="copy_embed_button">Copy Embed Code</button>
+            </div>
+            <textarea id="embed-code" readonly>
+<iframe src="https://yourdomain.com/converter" width="600" height="400"></iframe>
+            </textarea>
         </div>
 
-        <div id="iframe-generator">
-            <h2>Generate Embed Code</h2>
-            <label for="language">Language:</label>
-            <select id="language" name="language">
-                <option value="en">English</option>
-                <option value="cz">Czech</option>
-                <!-- Add more languages as needed -->
-            </select>
-
-            <label for="explanation">Explanation Style:</label>
-            <select id="explanation" name="explanation">
-                <option value="scientific">Scientific</option>
-                <option value="funny">Funny</option>
-                <!-- Add more styles as needed -->
-            </select>
-
-            <button id="generate-iframe">Generate Iframe</button>
-            <textarea id="iframe-code" readonly></textarea>
+        <div id="info">
+            <p data-i18n="learn_more">Learn more about <a href="https://www.auto.cz/skoda-fabia-slavi-20-let-pripomente-si-jeji-prvni-generaci-131124" target="_blank">Škoda Fabia 1.2 HTP</a></p>
         </div>
     </div>
 
+    <!-- Include i18next and i18next-browser-languagedetector -->
+    <script src="https://unpkg.com/i18next@20.6.1/dist/umd/i18next.min.js"></script>
+    <script src="https://unpkg.com/i18next-browser-languagedetector@6.1.2/dist/umd/i18nextBrowserLanguageDetector.min.js"></script>
+    <script src="https://unpkg.com/i18next-http-backend@1.4.0/i18nextHttpBackend.min.js"></script>
     <script src="/static/script.js"></script>
+    <script>
+        function copyEmbedCode() {
+            var copyText = document.getElementById("embed-code");
+            copyText.select();
+            copyText.setSelectionRange(0, 99999); /* For mobile devices */
+            document.execCommand("copy");
+            alert("Embed code copied to clipboard!");
+        }
+
+        function generateEmbedCode(event) {
+            event.preventDefault();
+            const value = document.getElementById('value').value;
+            const conversionType = document.getElementById('conversion-type').value;
+            const unit = document.getElementById('unit').value;
+            const scenario = document.getElementById('scenario').value;
+            const explanation = document.getElementById('explanation').value;
+            const language = document.getElementById('language').value;
+
+            const iframeSrc = `http://127.0.0.1:8000/embed?value=${value}&conversion_type=${conversionType}&unit=${unit}&scenario=${scenario}&lng=${language}&explanation=${explanation}`;
+            const embedContainer = document.createElement('div');
+            embedContainer.className = 'container';
+            embedContainer.innerHTML = `
+                <h3>Škoda Fabia 1.2 HTP Embed</h3>
+                <iframe src="${iframeSrc}" width="600" height="400"></iframe>
+            `;
+
+            document.getElementById('result').appendChild(embedContainer);
+
+            // Update the embed code textarea
+            const embedCodeTextarea = document.getElementById('embed-code');
+            embedCodeTextarea.value = `<iframe src="${iframeSrc}" width="600" height="400"></iframe>`;
+
+            // Show the embed code container
+            document.getElementById('embed-code-container').style.display = 'block';
+        }
+
+        // Set the current language selection
+        document.addEventListener('DOMContentLoaded', (event) => {
+            const language = document.getElementById('language');
+            const currentLanguage = i18next.language || 'en';
+            language.value = currentLanguage;
+        });
+    </script>
 </body>
 </html>

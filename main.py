@@ -1,14 +1,43 @@
-from http import client
-from fastapi import FastAPI, Query
+from fastapi import FastAPI, Query, Request, Path, HTTPException
 from fastapi.responses import FileResponse, HTMLResponse
 from fastapi.staticfiles import StaticFiles
 import requests
-import httpx
+import gettext
+import json
+import os
 
 app = FastAPI()
 
 # Serve static files
 app.mount("/static", StaticFiles(directory="static"), name="static")
+
+# Mount the locale directory to serve translation files
+app.mount("/locale", StaticFiles(directory="locale"), name="locale")
+
+# Set up gettext
+localedir = os.path.join(os.path.abspath(os.path.dirname(__file__)), 'locale')
+languages = ['en', 'es', 'fr']
+
+def get_locale(request: Request):
+    lang = request.headers.get('Accept-Language', 'en').split(',')[0]
+    return lang if lang in languages else 'en'
+
+def load_translations(lang):
+    try:
+        with open(os.path.join(localedir, lang, 'translation.json'), 'r', encoding='utf-8') as file:
+            return json.load(file)
+    except FileNotFoundError:
+        with open(os.path.join(localedir, 'en', 'translation.json'), 'r', encoding='utf-8') as file:
+            return json.load(file)
+
+@app.middleware("http")
+async def add_translation_middleware(request: Request, call_next):
+    lang = get_locale(request)
+    translation = gettext.translation('messages', localedir, languages=[lang], fallback=True)
+    translation.install()
+    request.state._ = translation.gettext
+    response = await call_next(request)
+    return response
 
 # Constants
 SKODA_FABIA_MASS_KG = 1055  # Mass of Škoda Fabia 1.2 HTP in kg
@@ -104,61 +133,65 @@ def convert_power_to_fabia_units(power: float, unit: str) -> float:
 
 # Endpoints
 @app.get("/convert/mass/{mass}")
-def convert_mass(mass: float, unit: str):
+def convert_mass(request: Request, mass: float, unit: str):
     """
     Convert mass to Škoda Fabia 1.2 HTP units.
     - **mass**: The mass to convert (default example: 400).
     - **unit**: The unit of the mass (default: kg).
     """
-    return {"fabia_units": convert_mass_to_fabia_units(mass, unit)}
+    _ = request.state._
+    return {"fabia_units": convert_mass_to_fabia_units(mass, unit), "message": _("Mass converted successfully.")}
 
 @app.get("/convert/length/{length}")
-def convert_length(length: float, unit: str):
+def convert_length(request: Request, length: float, unit: str):
     """
     Convert length to Škoda Fabia 1.2 HTP units.
     - **length**: The length to convert.
     - **unit**: The unit of the length (e.g., m, cm, mm, in, ft, yd, mi).
     """
-    return {"fabia_units": convert_length_to_fabia_units(length, unit)}
+    _ = request.state._
+    return {"fabia_units": convert_length_to_fabia_units(length, unit), "message": _("Length converted successfully.")}
 
 @app.get("/convert/width/{width}")
-def convert_width(width: float, unit: str):
+def convert_width(request: Request, width: float, unit: str):
     """
     Convert width to Škoda Fabia 1.2 HTP units.
     - **width**: The width to convert.
     - **unit**: The unit of the width (e.g., m, cm, mm, in, ft, yd, mi).
     """
-    return {"fabia_units": convert_width_to_fabia_units(width, unit)}
+    _ = request.state._
+    return {"fabia_units": convert_width_to_fabia_units(width, unit), "message": _("Width converted successfully.")}
 
 @app.get("/convert/height/{height}")
-def convert_height(height: float, unit: str):
+def convert_height(request: Request, height: float, unit: str):
     """
     Convert height to Škoda Fabia 1.2 HTP units.
     - **height**: The height to convert.
     - **unit**: The unit of the height (e.g., m, cm, mm, in, ft, yd, mi).
     """
-    return {"fabia_units": convert_height_to_fabia_units(height, unit)}
+    _ = request.state._
+    return {"fabia_units": convert_height_to_fabia_units(height, unit), "message": _("Height converted successfully.")}
 
 @app.get("/convert/area/{area}")
-def convert_area(area: float, unit: str, scenario: str = Query("packed", enum=["packed", "parking_lot"])):
+def convert_area(request: Request, area: float, unit: str, scenario: str = Query("packed", enum=["packed", "parking_lot"])):
     """
     Convert area to Škoda Fabia 1.2 HTP units.
     - **area**: The area to convert.
     - **unit**: The unit of the area.
     - **scenario**: The scenario for the conversion (packed or parking_lot).
     """
-    
-    return {"fabia_units": convert_area_to_fabia_units(area, unit, scenario)}
+    _ = request.state._
+    return {"fabia_units": convert_area_to_fabia_units(area, unit, scenario), "message": _("Area converted successfully.")}
 
 @app.get("/convert/power/{power}")
-def convert_power(power: float, unit: str):
+def convert_power(request: Request, power: float, unit: str):
     """
     Convert power to Škoda Fabia 1.2 HTP units.
     - **power**: The power to convert.
     - **unit**: The unit of the power.
     """
-    
-    return {"fabia_units": convert_power_to_fabia_units(power, unit)}
+    _ = request.state._
+    return {"fabia_units": convert_power_to_fabia_units(power, unit), "message": _("Power converted successfully.")}
 
 # Serve the index.html file
 @app.get("/")
@@ -166,42 +199,46 @@ def read_root():
     return FileResponse("index.html")
 
 @app.get("/embed", response_class=HTMLResponse)
-def generate(value: float, conversion_type: str, unit: str, scenario: str):
+def generate(request: Request, value: float, conversion_type: str, unit: str, scenario: str = None, lng: str = 'en', explanation: str = 'scientific'):
     """
-    Creates emded html code for further use.
+    Creates embed HTML code for further use.
     - **value**: The value to convert.
     - **conversion_type**: The type of conversion (e.g., area, power).
     - **unit**: The unit of the value.
     - **scenario**: The scenario for the conversion (optional).
+    - **lng**: The language for the translation.
+    - **explanation**: The explanation style (scientific or funny).
     """
-    
-    
-    if conversion_type == "area" and scenario:
-        url = f"http://127.0.0.1:8000/convert/{conversion_type}/{value}?unit={unit}&scenario={scenario}"
-    else:
-        url = f"http://127.0.0.1:8000/convert/{conversion_type}/{value}?unit={unit}"
+    try:
+        # Set the language for translation
+        translations = load_translations(lng)
+
+        # Construct the conversion URL
+        if conversion_type == "area" and scenario:
+            url = f"http://127.0.0.1:8000/convert/{conversion_type}/{value}?unit={unit}&scenario={scenario}&lng={lng}"
+        else:
+            url = f"http://127.0.0.1:8000/convert/{conversion_type}/{value}?unit={unit}&lng={lng}"
+
+        # Perform the conversion
+        response = requests.get(url)
+        response.raise_for_status()  # Raise an exception for HTTP errors
+        result = response.json()
+        fabia_units = result.get("fabia_units", 0)
+
+        # Generate the HTML content
+        message = translations["conversion_result"][explanation].format(
+            value=value,
+            unit=unit,
+            result=fabia_units,
+            scenario=translations["scenarios"].get(scenario, "") if scenario else ""
+        )
+        html_content = f"<p>{message}</p>"
         
-
-    response = requests.get(url)
-    result = response.json()
-    fabia_units = result.get("fabia_units", 0)
-    # Extend the response with additional information
-    extended_result = {
-        "original_value": value,
-        "unit": unit,
-        "conversion_type": conversion_type,
-        "fabia_units": fabia_units,
-        "message": f"The conversion of {value} {unit} {conversion_type} is approximately {fabia_units:.2f} Škoda Fabia 1.2 HTP units."
-    }
-
-    # Generate the HTML content
-    html_content = f"""
-    <div style="font-family: Arial, sans-serif; background-color: #f4f4f4; padding: 20px; border-radius: 5px; box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);">
-       <p><strong>Good to know:</strong> {extended_result['message']}</p>
-    </div>
-    """
-    
-    return HTMLResponse(content=html_content)
+        return HTMLResponse(content=html_content)
+    except requests.RequestException as e:
+        raise HTTPException(status_code=500, detail=f"RequestException: {str(e)}")
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Exception: {str(e)}")
 
 # Run the application
 # Command: uvicorn main:app --reload
