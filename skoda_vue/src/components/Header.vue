@@ -54,13 +54,13 @@
     
     <!-- PWA Install Prompt -->
     <div v-if="showInstallPrompt" class="pwa-prompt">
-      <div>
+      <div class="pwa-text">
         <strong>{{ $t('header.installTitle') }}</strong>
         <p>{{ $t('header.installText') }}</p>
       </div>
-      <div>
-        <button @click="installPWA">{{ $t('header.install') }}</button>
-        <button @click="dismissInstall" style="background: #666;">{{ $t('header.later') }}</button>
+      <div class="pwa-actions">
+        <button class="pwa-btn secondary" @click="dismissInstall">{{ $t('header.later') }}</button>
+        <button class="pwa-btn primary" @click="installPWA">{{ $t('header.install') }}</button>
       </div>
     </div>
 

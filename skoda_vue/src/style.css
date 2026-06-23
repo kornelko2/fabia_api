@@ -145,20 +145,70 @@ button:disabled {
   bottom: 1rem;
   left: 1rem;
   right: 1rem;
+  max-width: 560px;
+  margin: 0 auto;
   background: white;
   border-radius: 12px;
-  padding: 1rem;
+  padding: 1rem 1.25rem;
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
   z-index: 1000;
   display: flex;
   align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
   gap: 1rem;
 }
 
-.pwa-prompt button {
-  min-width: 100px;
-  padding: 0.5rem 1rem;
+.pwa-text {
+  flex: 1 1 220px;
+}
+
+.pwa-text strong {
+  display: block;
+  margin-bottom: 0.15rem;
+}
+
+.pwa-text p {
   margin: 0;
+  font-size: 0.875rem;
+  color: #666;
+}
+
+.pwa-actions {
+  display: flex;
+  gap: 0.5rem;
+  flex-shrink: 0;
+}
+
+/* Consistent button pair: identical size, primary + ghost secondary */
+.pwa-btn {
+  width: auto;
+  min-width: 92px;
+  padding: 0.55rem 1.1rem;
+  margin: 0;
+  border-radius: 8px;
+  font-size: 0.85rem;
+  line-height: 1;
+  white-space: nowrap;
+}
+
+.pwa-btn.primary {
+  background: var(--skoda-green);
+  color: #fff;
+  border: 1px solid var(--skoda-green);
+}
+
+.pwa-btn.secondary {
+  background: #fff;
+  color: #555;
+  border: 1px solid #d0d0d0;
+}
+
+.pwa-btn.secondary:hover {
+  background: #f3f4f6;
+  color: #222;
+  box-shadow: none;
+  transform: none;
 }
 
 /* Skoda green theme */

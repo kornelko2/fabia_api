@@ -86,19 +86,34 @@
         <div class="footer-section">
           <h4>{{ $t('footer.support') }}</h4>
           <p style="color:#666; margin-bottom:0.75rem;">{{ $t('footer.supportDesc') }}</p>
-          <a 
-            href="https://buymeacoffee.com/kornelko" 
-            target="_blank" 
-            rel="noopener"
-            class="bmc-link"
-            title="Buy me a coffee"
-          >
-            <img 
-              src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png" 
-              alt="Buy Me A Coffee"
-              class="bmc-img"
-            />
-          </a>
+          <div class="support-links">
+            <a
+              href="https://buymeacoffee.com/kornelko"
+              target="_blank"
+              rel="noopener"
+              class="bmc-link"
+              title="Buy me a coffee"
+            >
+              <img
+                src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png"
+                alt="Buy Me A Coffee"
+                class="bmc-img"
+              />
+            </a>
+            <a
+              href="https://github.com/kornelko2/fabia_api"
+              target="_blank"
+              rel="noopener"
+              class="github-link"
+              aria-label="View source on GitHub"
+              title="View source on GitHub"
+            >
+              <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true">
+                <path fill="currentColor" d="M12,2A10,10 0 0,0 2,12C2,16.42 4.87,20.17 8.84,21.5C9.34,21.58 9.5,21.27 9.5,21C9.5,20.77 9.5,20.14 9.5,19.31C6.73,19.91 6.14,17.97 6.14,17.97C5.68,16.81 5.03,16.5 5.03,16.5C4.12,15.88 5.1,15.9 5.1,15.9C6.1,15.97 6.63,16.93 6.63,16.93C7.5,18.45 8.97,18 9.54,17.76C9.63,17.11 9.89,16.67 10.17,16.42C7.95,16.17 5.62,15.31 5.62,11.5C5.62,10.39 6,9.5 6.65,8.79C6.55,8.54 6.2,7.5 6.75,6.15C6.75,6.15 7.59,5.88 9.5,7.17C10.29,6.95 11.15,6.84 12,6.84C12.85,6.84 13.71,6.95 14.5,7.17C16.41,5.88 17.25,6.15 17.25,6.15C17.8,7.5 17.45,8.54 17.35,8.79C18,9.5 18.38,10.39 18.38,11.5C18.38,15.32 16.04,16.16 13.81,16.41C14.17,16.72 14.5,17.33 14.5,18.26C14.5,19.6 14.5,20.68 14.5,21C14.5,21.27 14.66,21.59 15.17,21.5C19.14,20.16 22,16.42 22,12A10,10 0 0,0 12,2Z" />
+              </svg>
+              <span>GitHub</span>
+            </a>
+          </div>
         </div>
       </div>
       
@@ -641,14 +656,44 @@ export default {
   color: var(--skoda-green);
 }
 
+.support-links {
+  display: flex;
+  align-items: stretch;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}
 .bmc-link {
-  display: inline-block;
+  display: inline-flex;
+  height: 48px;
 }
 .bmc-img {
   height: 48px;
   width: auto;
   border-radius: 6px;
   box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+  display: block;
+}
+.github-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  height: 48px;
+  padding: 0 1.1rem;
+  box-sizing: border-box;
+  background: #24292f;
+  color: #fff;
+  border-radius: 6px;
+  font-weight: 600;
+  font-size: 0.95rem;
+  line-height: 1;
+  text-decoration: none;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+  transition: background 0.2s ease, transform 0.2s ease;
+}
+.github-link:hover {
+  background: #000;
+  transform: translateY(-1px);
 }
 
 .footer-bottom {

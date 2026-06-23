@@ -49,6 +49,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Updated Wrangler 4.83.0 → 4.104.0 (global install).
 
 ### Added
+- GitHub repository link (with the GitHub mark) in the footer's "Support This
+  Project" section, next to the Buy Me a Coffee banner.
 - SEO metadata in `index.html`: a real page title (replacing the default
   `skoda_vue`), plus description, keywords, robots, Open Graph and Twitter Card
   tags so search engines and social previews index the app properly.
