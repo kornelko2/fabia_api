@@ -1,0 +1,35 @@
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+node_modules
+dist
+dist-ssr
+*.local
+
+# Wrangler / Miniflare local state
+.wrangler/
+
+# PWA dev build artifacts
+dev-dist/
+
+# Local D1 data dumps — contain real IPs / user data. Keep schema files only
+# (schema.sql, schema_update.sql, skoda-fabia-conversions-backup.sql).
+backend/remote-data.sql
+backend/*-remote-backup.sql
+
+# Editor directories and files
+.vscode/*
+!.vscode/extensions.json
+.idea
+.DS_Store
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?

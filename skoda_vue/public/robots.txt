@@ -1,0 +1,5 @@
+# https://fabia-conv.crayz.me/robots.txt
+User-agent: *
+Allow: /
+
+Sitemap: https://fabia-conv.crayz.me/sitemap.xml

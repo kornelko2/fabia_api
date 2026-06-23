@@ -39,11 +39,12 @@ async def add_translation_middleware(request: Request, call_next):
     response = await call_next(request)
     return response
 
-# Constants
-SKODA_FABIA_MASS_KG = 1055  # Mass of Škoda Fabia 1.2 HTP in kg
-SKODA_FABIA_LENGTH_M = 3.96  # Length of Škoda Fabia 1.2 HTP in meters
-SKODA_FABIA_WIDTH_M = 1.65   # Width of Škoda Fabia 1.2 HTP in meters
-SKODA_FABIA_HEIGHT_M = 1.498  # Height of Škoda Fabia 1.2 HTP in meters
+# Constants — Škoda Fabia 1.2 HTP reference specs (kept in sync with the
+# Cloudflare Worker in skoda_vue/backend/src/index.ts, the source of truth)
+SKODA_FABIA_MASS_KG = 1035  # Mass of Škoda Fabia 1.2 HTP in kg (curb weight)
+SKODA_FABIA_LENGTH_M = 4.002  # Length of Škoda Fabia 1.2 HTP in meters (4002 mm)
+SKODA_FABIA_WIDTH_M = 1.646   # Width of Škoda Fabia 1.2 HTP in meters (1646 mm)
+SKODA_FABIA_HEIGHT_M = 1.441  # Height of Škoda Fabia 1.2 HTP in meters (1441 mm)
 SKODA_FABIA_AREA_M2 = SKODA_FABIA_LENGTH_M * SKODA_FABIA_WIDTH_M  # Area without maneuvering space
 SKODA_FABIA_PARKING_AREA_M2 = 12.5  # Area required per car including maneuvering space
 SKODA_FABIA_POWER_KW = 47  # Power of Škoda Fabia 1.2 HTP in kW

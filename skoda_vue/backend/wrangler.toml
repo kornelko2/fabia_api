@@ -1,0 +1,23 @@
+name = "skoda-fabia-api"
+main = "src/index.ts"
+compatibility_date = "2025-10-12"
+
+[vars]
+# Environment variables (if needed)
+# Use 'wrangler secret put SECRET_NAME' for sensitive data
+
+# Allowed OpenAI models (comma-separated)
+ALLOWED_MODELS = "gpt-5-mini,gpt-4o-mini,gpt-4-turbo,gpt-3.5-turbo"
+DEFAULT_MODEL = "gpt-5-mini"
+
+# Secrets configured:
+# - AI_API_KEY: Your OpenAI API token
+# - CLOUDFLARE_ACCOUNT_ID: Your Cloudflare account ID (if using Cloudflare AI)
+
+
+[[d1_databases]]
+binding = "skoda_fabia_conversions"
+database_name = "skoda-fabia-conversions"
+database_id = "698742c4-6076-4ab4-8eec-3d594f362036"
+
+

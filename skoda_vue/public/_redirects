@@ -1,0 +1,5 @@
+# Serve the Google Search Console verification file at its exact .html URL.
+# Cloudflare Pages otherwise 308-redirects /foo.html -> /foo (clean URLs),
+# which makes Google's verification fetch fail. A 200 rewrite serves the
+# content directly with no redirect.
+/google5bd7d881f2100c95.html  /google5bd7d881f2100c95  200
