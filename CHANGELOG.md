@@ -10,6 +10,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [0.2.0] - 2026-06-23
 
 ### Fixed
+- Stopped the footer from polling `/stats` every 30 seconds. The interval was
+  never cleared, so Vite HMR stacked duplicate timers in dev (a flood of
+  requests) and it generated needless background traffic in production. Stats
+  now load once on mount; the Statistics section's Refresh button covers manual
+  updates.
 - AI explanation text now renders Markdown correctly. `formatResult()` ignored
   the model's `**bold**` syntax and bolded number+unit runs with an ASCII-only
   regex, which broke mid-word on accented characters (e.g. Czech `koní`). It now

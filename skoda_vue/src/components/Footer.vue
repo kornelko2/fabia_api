@@ -323,15 +323,9 @@ export default {
       this.canInstall = false;
     });
     
-    // Load performance stats
+    // Load stats once on mount. No polling — the Statistics section has a
+    // manual Refresh button, so we avoid repeated background /stats requests.
     this.loadStats();
-    
-    // Refresh stats every 30 seconds if using real data
-    setInterval(() => {
-      if (this.usingRealData) {
-        this.loadStats();
-      }
-    }, 30000);
   },
   methods: {
     scrollToTop() {
