@@ -5,9 +5,10 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "vite-ssg build",
+    "build": "npm run sitemap && vite-ssg build",
     "build:spa": "vite build",
     "preview": "vite preview",
+    "sitemap": "node scripts/make-sitemap.mjs",
     "og-image": "node scripts/make-og-image.mjs"
   },
   "dependencies": {

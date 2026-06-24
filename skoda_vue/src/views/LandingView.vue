@@ -18,6 +18,14 @@
       <!-- The real converter, prefilled with this page's example -->
       <ConversionForm :initial-input="page.example" heading-level="h2" />
 
+      <section class="faq card">
+        <h2>Frequently asked</h2>
+        <div v-for="(item, i) in faqs" :key="i" class="faq-item">
+          <h3>{{ item.q }}</h3>
+          <p>{{ item.a }}</p>
+        </div>
+      </section>
+
       <section class="more card">
         <h2>More Škoda Fabia comparisons</h2>
         <ul class="more-links">
@@ -57,6 +65,36 @@ const refLabel = computed(() => REF_LABEL[props.page.type] || '')
 
 const canonical = computed(() => `https://fabia-conv.crayz.me/${props.page.slug}`)
 
+// Visible FAQ — also emitted as FAQPage structured data below. Google requires
+// the schema's Q&As to match content visible on the page, so these are the same.
+const faqs = computed(() => {
+  const n = fabias.value.toLocaleString()
+  return [
+    {
+      q: props.page.h1,
+      a: `${props.page.example} is about ${n} Škoda Fabias, because each Fabia 1.2 HTP measures ${refLabel.value}.`
+    },
+    {
+      q: `How is "${props.page.example}" converted into Škoda Fabias?`,
+      a: `We divide ${props.page.example} by a single Škoda Fabia 1.2 HTP (${refLabel.value}), which gives roughly ${n} Fabias.`
+    },
+    {
+      q: 'What is the Škoda Fabia Converter?',
+      a: 'A free, playful tool that expresses any measurement — length, area, weight, power or price — as how many Škoda Fabias it equals, with AI-written explanations in 8 languages.'
+    }
+  ]
+})
+
+const faqJsonLd = computed(() => JSON.stringify({
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: faqs.value.map(f => ({
+    '@type': 'Question',
+    name: f.q,
+    acceptedAnswer: { '@type': 'Answer', text: f.a }
+  }))
+}))
+
 useHead(() => ({
   title: props.page.title,
   meta: [
@@ -68,7 +106,10 @@ useHead(() => ({
     { name: 'twitter:title', content: props.page.title },
     { name: 'twitter:description', content: props.page.description }
   ],
-  link: [{ rel: 'canonical', href: canonical.value }]
+  link: [{ rel: 'canonical', href: canonical.value }],
+  script: [
+    { type: 'application/ld+json', innerHTML: faqJsonLd.value }
+  ]
 }))
 </script>
 
@@ -120,6 +161,37 @@ useHead(() => ({
 .how {
   color: #666;
   font-size: 0.9375rem;
+}
+
+.faq {
+  margin-top: 1.5rem;
+}
+
+.faq h2,
+.more h2 {
+  color: var(--skoda-green);
+  font-size: 1.1rem;
+  margin-bottom: 0.75rem;
+}
+
+.faq-item {
+  margin-bottom: 1rem;
+}
+
+.faq-item:last-child {
+  margin-bottom: 0;
+}
+
+.faq-item h3 {
+  font-size: 1rem;
+  color: #1a1a1a;
+  margin-bottom: 0.25rem;
+}
+
+.faq-item p {
+  color: #555;
+  line-height: 1.6;
+  margin: 0;
 }
 
 .more {

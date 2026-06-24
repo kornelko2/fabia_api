@@ -134,7 +134,8 @@
     "responseTime": "Czas odpowiedzi:",
     "cacheHitRate": "Skuteczność pamięci podręcznej:",
     "apiStatus": "Status API:",
-    "toastLinkCopied": "Link skopiowany do schowka!"
+    "toastLinkCopied": "Link skopiowany do schowka!",
+    "popularComparisons": "Popularne porównania"
   },
   "about": {
     "title": "O Fabia Converter",

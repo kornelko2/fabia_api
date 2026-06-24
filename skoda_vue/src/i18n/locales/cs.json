@@ -134,7 +134,8 @@
     "responseTime": "Doba odezvy:",
     "cacheHitRate": "Úspěšnost mezipaměti:",
     "apiStatus": "Stav API:",
-    "toastLinkCopied": "Odkaz zkopírován do schránky!"
+    "toastLinkCopied": "Odkaz zkopírován do schránky!",
+    "popularComparisons": "Oblíbená srovnání"
   },
   "about": {
     "title": "O aplikaci Fabia Converter",

@@ -134,7 +134,8 @@
     "responseTime": "Válaszidő:",
     "cacheHitRate": "Gyorsítótár-találati arány:",
     "apiStatus": "API állapot:",
-    "toastLinkCopied": "Hivatkozás a vágólapra másolva!"
+    "toastLinkCopied": "Hivatkozás a vágólapra másolva!",
+    "popularComparisons": "Népszerű összehasonlítások"
   },
   "about": {
     "title": "A Fabia Converterről",

@@ -26,7 +26,7 @@
 ## Phase tracker
 - [x] **Phase 0 — Foundation** (router + vite-ssg + SSR-safe i18n; build emits HTML)
 - [x] **Phase 1 — Landing pages** (data-driven SEO pages reusing the converter)
-- [ ] **Phase 2 — Structured data & discovery** (FAQ/WebSite JSON-LD, sitemap, links)
+- [x] **Phase 2 — Structured data & discovery** (FAQ/WebSite JSON-LD, sitemap, links)
 - [ ] **Phase 3 — Copy & QA** (tighten messaging, verify prerendered HTML, redeploy)
 
 ---
@@ -83,12 +83,20 @@ static source carries its own title/description/canonical/H1 and the computed
 
 ## Phase 2 — Structured data & discovery
 ### Tasks
-- [ ] `FAQPage` JSON-LD on landing pages (2–4 Q&As each) + `WebSite` +
-      `SearchAction` on home.
-- [ ] Add all routes to `public/sitemap.xml` (or generate it).
-- [ ] Footer/home internal links to the main category pages.
+- [x] `FAQPage` JSON-LD on every landing page (3 Q&As each) with a matching
+      **visible** FAQ section (Google requires the schema to mirror page content).
+- [x] `WebSite` + `SearchAction` JSON-LD (sitewide via `index.html`) →
+      `?q={search_term_string}` for a potential sitelinks search box.
+- [x] **Generated** `sitemap.xml` from the catalog via `scripts/make-sitemap.mjs`,
+      wired into `npm run build` (`npm run sitemap && vite-ssg build`). 9 URLs,
+      with the OG image on home.
+- [x] Footer **"Popular comparisons"** internal links (6 landing pages) — appear
+      on every page, so the pages are discoverable + get link equity. Added the
+      `footer.popularComparisons` key to all 8 locales.
 
-**Acceptance:** valid structured data (Rich Results test); sitemap lists every page.
+**Acceptance:** met — each landing page carries WebApplication + WebSite + FAQPage
+JSON-LD; sitemap lists all 9 URLs; footer links to the pages sitewide.
+(Validate with Google's Rich Results test after deploy.)
 
 ---
 
@@ -124,3 +132,8 @@ static source carries its own title/description/canonical/H1 and the computed
   HTML files. Fixed heading hierarchy to one `<h1>` per page (Header brand → link,
   converter title `headingLevel` h1/h2). Next: Phase 2 — FAQ/WebSite JSON-LD,
   sitemap, internal links from home/footer.
+- 2026-06-24 — Phase 2 done. FAQPage JSON-LD + visible FAQ on landing pages;
+  WebSite/SearchAction sitewide; generated sitemap.xml (9 URLs, wired into build);
+  footer "Popular comparisons" links (8 locales). Verified all JSON-LD + sitemap
+  in the built output. Next: Phase 3 — messaging/copy polish, view-source check,
+  redeploy + Lighthouse.

@@ -134,7 +134,8 @@
     "responseTime": "Antwortzeit:",
     "cacheHitRate": "Cache-Trefferquote:",
     "apiStatus": "API-Status:",
-    "toastLinkCopied": "Link in die Zwischenablage kopiert!"
+    "toastLinkCopied": "Link in die Zwischenablage kopiert!",
+    "popularComparisons": "Beliebte Vergleiche"
   },
   "about": {
     "title": "Über Fabia Converter",

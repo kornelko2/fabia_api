@@ -45,6 +45,16 @@
           </div>
         </div>
         
+        <!-- Popular comparisons (internal links to SEO landing pages) -->
+        <div class="footer-section">
+          <h4>{{ $t('footer.popularComparisons') }}</h4>
+          <ul class="comparison-links">
+            <li v-for="p in comparisonPages" :key="p.slug">
+              <router-link :to="'/' + p.slug">{{ pageLabel(p) }}</router-link>
+            </li>
+          </ul>
+        </div>
+
         <!-- Tools & Features -->
         <div class="footer-section">
           <h4>{{ $t('footer.features') }}</h4>
@@ -287,12 +297,18 @@
 <script>
 import { Radio, Car, BrainCircuit, Globe, Smartphone, Zap, Target, ArrowUp, Share2, X } from '@lucide/vue'
 import AppIcon from './AppIcon.vue'
+import { pages } from '../content/pages.js'
 
 export default {
   name: 'AppFooter',
   components: { AppIcon },
   setup() {
     return { Radio, Car, BrainCircuit, Globe, Smartphone, Zap, Target, ArrowUp, Share2, X }
+  },
+  computed: {
+    comparisonPages() {
+      return pages.slice(0, 6)
+    }
   },
   data() {
     return {
@@ -335,6 +351,13 @@ export default {
     this.loadStats();
   },
   methods: {
+    pageLabel(p) {
+      // Derive a short link label from the slug, e.g.
+      // "blue-whale-in-skoda-fabias" -> "Blue whale".
+      const base = p.slug.replace('-in-skoda-fabias', '').replace(/-/g, ' ')
+      return base.charAt(0).toUpperCase() + base.slice(1)
+    },
+
     scrollToTop() {
       window.scrollTo({ 
         top: 0, 
@@ -592,6 +615,25 @@ export default {
   background: none;
   transform: none;
   box-shadow: none;
+}
+
+.comparison-links {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  gap: 0.4rem;
+}
+
+.comparison-links a {
+  color: #666;
+  text-decoration: none;
+  font-size: 0.875rem;
+  transition: color 0.2s ease;
+}
+
+.comparison-links a:hover {
+  color: var(--skoda-green);
 }
 
 .feature-list {

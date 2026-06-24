@@ -69,6 +69,24 @@
         }
       }
     </script>
+
+    <!-- WebSite + on-site search (sitelinks search box) -->
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "WebSite",
+        "name": "Škoda Fabia Converter",
+        "url": "https://fabia-conv.crayz.me/",
+        "potentialAction": {
+          "@type": "SearchAction",
+          "target": {
+            "@type": "EntryPoint",
+            "urlTemplate": "https://fabia-conv.crayz.me/?q={search_term_string}"
+          },
+          "query-input": "required name=search_term_string"
+        }
+      }
+    </script>
   </head>
   <body>
     <div id="app">
