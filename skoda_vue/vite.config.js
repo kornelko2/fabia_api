@@ -49,4 +49,11 @@ export default defineConfig({
       }
     })
   ],
+  ssgOptions: {
+    script: 'async',
+    formatting: 'minify',
+    // Render the SPA's dynamic bits only on the client; the prerendered HTML is
+    // the SEO content + initial markup.
+    crittersOptions: false
+  }
 })

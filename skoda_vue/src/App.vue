@@ -1,23 +1,15 @@
 
 <template>
   <div id="app">
-    <Header 
+    <Header
       :current-language="currentLanguage"
       @language-changed="handleLanguageChange"
       @install-app="handleInstallApp"
     />
-    
-    <main class="main-content">
-      <ConversionForm 
-        :current-language="currentLanguage"
-        @use-example="handleUseExample"
-        ref="conversionForm"
-      />
-      
-      <Statistics />
-    </main>
-    
-    <Footer 
+
+    <router-view />
+
+    <Footer
       @use-example="handleUseExample"
       @install-app="handleInstallApp"
     />
@@ -25,19 +17,14 @@
 </template>
 
 <script>
-import { registerSW } from 'virtual:pwa-register'
 import Header from './components/Header.vue'
-import ConversionForm from './components/ConversionForm.vue'
 import Footer from './components/Footer.vue'
-import Statistics from './components/Statistics.vue'
 
 export default {
   name: 'App',
   components: {
     Header,
-    ConversionForm,
-    Footer,
-    Statistics
+    Footer
   },
   data() {
     return {
@@ -68,16 +55,17 @@ export default {
       e.preventDefault();
       this.deferredPrompt = e;
     });
-    
-    // Register service worker via vite-plugin-pwa helper (works in dev and prod)
+
+    // Register the service worker (client-only; dynamic import keeps the
+    // SSG/SSR build from resolving the PWA virtual module on the server).
     if ('serviceWorker' in navigator) {
-      const updateSW = registerSW({
-        immediate: true,
-        onRegistered: (r) => console.log('SW registered:', r),
-        onRegisterError: (e) => console.log('SW registration failed:', e)
-      })
-      // Optionally expose updateSW() to trigger updates later
-      this.$swUpdate = updateSW
+      import('virtual:pwa-register').then(({ registerSW }) => {
+        this.$swUpdate = registerSW({
+          immediate: true,
+          onRegistered: (r) => console.log('SW registered:', r),
+          onRegisterError: (e) => console.log('SW registration failed:', e)
+        });
+      });
     }
   },
   methods: {
@@ -89,11 +77,10 @@ export default {
     },
     
     handleUseExample(example) {
-      // Set the example in the conversion form
-      if (this.$refs.conversionForm) {
-        this.$refs.conversionForm.userInput = example;
-        this.$refs.conversionForm.handleConvert();
-      }
+      // Drive the converter via the deep-link query so it works from any page
+      // (Home or a landing page). HomeView's ConversionForm reads ?q= and
+      // auto-converts; this keeps a single, shareable mechanism.
+      this.$router.push({ path: '/', query: { q: example } });
     },
     
     async handleInstallApp() {

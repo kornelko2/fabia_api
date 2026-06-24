@@ -11,8 +11,13 @@ import fr from './locales/fr.json'
 export const SUPPORTED_LOCALES = ['cs', 'sk', 'hu', 'pl', 'en', 'de', 'es', 'fr']
 
 function getInitialLocale() {
-  const saved = localStorage.getItem('preferred-language')
-  if (saved && SUPPORTED_LOCALES.includes(saved)) return saved
+  // SSR/SSG-safe: during static generation there is no window/localStorage.
+  // Prerender in the default locale; the client picks the real one on hydration.
+  if (typeof window === 'undefined') return 'en'
+  try {
+    const saved = localStorage.getItem('preferred-language')
+    if (saved && SUPPORTED_LOCALES.includes(saved)) return saved
+  } catch { /* localStorage may be unavailable */ }
   const browser = (navigator.language || 'en').slice(0, 2)
   return SUPPORTED_LOCALES.includes(browser) ? browser : 'en'
 }

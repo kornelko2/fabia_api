@@ -308,12 +308,6 @@ export default {
       Copy, Share2, Link2, CircleX, Wrench, Ruler, ArrowRightLeft, X, SlidersHorizontal
     }
   },
-  props: {
-    currentLanguage: {
-      type: Object,
-      required: true
-    }
-  },
   data() {
     return {
       userInput: '',
@@ -375,14 +369,22 @@ export default {
     }
   },
   watch: {
-    currentLanguage: {
-      handler(newLang) {
-        const language = this.languages.find(l => l.code === newLang.code);
+    // Keep the response language in sync with the active UI locale.
+    '$i18n.locale': {
+      handler(code) {
+        const language = this.languages.find(l => l.code === code);
         if (language) {
           this.selectedLanguage = language.value;
         }
       },
       immediate: true
+    },
+    // React to deep-link changes pushed via the router (e.g. an example chip on
+    // another page navigates to /?q=… while this component is already mounted).
+    '$route.query.q'(q) {
+      if (q && q !== this.userInput) {
+        this.applyDeepLink();
+      }
     }
   },
   mounted() {

@@ -5,16 +5,20 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "vite build",
+    "build": "vite-ssg build",
+    "build:spa": "vite build",
     "preview": "vite preview",
     "og-image": "node scripts/make-og-image.mjs"
   },
   "dependencies": {
     "@lucide/vue": "^1.21.0",
+    "@unhead/vue": "^2.1.15",
     "hono": "^4.9.11",
     "vite-plugin-pwa": "^1.0.3",
+    "vite-ssg": "^28.3.0",
     "vue": "^3.5.22",
     "vue-i18n": "^11.4.6",
+    "vue-router": "^4.6.4",
     "workbox-window": "^7.3.0",
     "zod": "^4.1.12"
   },
