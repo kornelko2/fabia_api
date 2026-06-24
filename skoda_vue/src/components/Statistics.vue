@@ -1,5 +1,7 @@
 <template>
-  <div class="statistics-section">
+  <div class="statistics-wrapper">
+    <div class="container">
+    <div class="statistics-section">
     <div class="stats-header">
       <h3 class="stats-title" @click="toggleStats">
         <AppIcon :icon="ChartColumnBig" :size="22" /> {{ $t('stats.title') }}
@@ -266,6 +268,8 @@
         </div>
       </div>
     </div>
+    </div>
+    </div>
   </div>
 </template>
 
@@ -486,12 +490,18 @@ export default {
 </script>
 
 <style scoped>
+.statistics-wrapper {
+  /* Vertical rhythm to match .conversion-form; horizontal centering is handled
+     by the inner .container so this section lines up with the converter cards. */
+  padding: 2rem 0;
+}
+
 .statistics-section {
   background: white;
   border-radius: 12px;
   padding: 2rem;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  margin: 2rem 0;
+  border: 1px solid #e0e0e0;
 }
 
 .stats-header {
