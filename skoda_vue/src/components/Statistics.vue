@@ -566,7 +566,7 @@ export default {
 }
 
 .refresh-btn:hover:not(:disabled) {
-  background: #008f42;
+  background: var(--skoda-green-dark);
   transform: translateY(-1px);
 }
 
@@ -762,7 +762,7 @@ export default {
 }
 
 .highlight-number {
-  color: #4CAF50;
+  color: var(--skoda-green);
   font-weight: 700;
   font-size: 1.1em;
 }

@@ -526,19 +526,22 @@ export default {
 }
 
 .live-indicator {
-  background: #ff4444;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  background: #c62828;
   color: white;
   padding: 0.25rem 0.5rem;
   border-radius: 12px;
   font-size: 0.75rem;
   font-weight: 600;
+  /* Pulse via box-shadow (not opacity) so the white text keeps full contrast. */
   animation: pulse 2s infinite;
 }
 
 @keyframes pulse {
-  0% { opacity: 1; }
-  50% { opacity: 0.7; }
-  100% { opacity: 1; }
+  0%, 100% { box-shadow: 0 0 0 0 rgba(198, 40, 40, 0.5); }
+  50% { box-shadow: 0 0 0 5px rgba(198, 40, 40, 0); }
 }
 
 .stats-grid {
@@ -769,7 +772,7 @@ export default {
 .perf-label {
   display: block;
   font-size: 0.75rem;
-  color: #888;
+  color: #6e6e6e;
   margin-bottom: 0.25rem;
 }
 
@@ -781,7 +784,7 @@ export default {
 }
 
 .perf-value.online {
-  color: #28a745;
+  color: var(--skoda-green);
 }
 
 .perf-value.offline {
