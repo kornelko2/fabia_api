@@ -36,7 +36,8 @@
     "funnyOption": "Zabawne i kreatywne",
     "scientificOption": "Naukowe i szczegółowe",
     "converting": "Przeliczanie na Fabie...",
-    "convert": "Przelicz na Fabie"
+    "convert": "Przelicz na Fabie",
+    "options": "Opcje"
   },
   "result": {
     "title": "Wynik przeliczenia",
@@ -235,7 +236,9 @@
     "language": "Język:",
     "usedLabel": "Użyto:",
     "created": "Utworzono:",
-    "lastUsed": "Ostatnio użyto:"
+    "lastUsed": "Ostatnio użyto:",
+    "show": "Pokaż statystyki",
+    "hide": "Ukryj statystyki"
   },
   "types": {
     "length": "Długość",

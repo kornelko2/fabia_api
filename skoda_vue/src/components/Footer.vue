@@ -595,12 +595,18 @@ export default {
   list-style: none;
   padding: 0;
   margin: 0;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.5rem 1rem;
 }
 
 .feature-list li {
-  padding: 0.375rem 0;
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.25rem 0;
   color: #666;
-  font-size: 0.875rem;
+  font-size: 0.8125rem;
 }
 
 .footer-actions {

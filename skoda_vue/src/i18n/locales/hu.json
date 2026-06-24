@@ -36,7 +36,8 @@
     "funnyOption": "Vicces és kreatív",
     "scientificOption": "Tudományos és részletes",
     "converting": "Átváltás Fabiákra...",
-    "convert": "Átváltás Fabiákra"
+    "convert": "Átváltás Fabiákra",
+    "options": "Beállítások"
   },
   "result": {
     "title": "Átváltás eredménye",
@@ -235,7 +236,9 @@
     "language": "Nyelv:",
     "usedLabel": "Felhasználva:",
     "created": "Létrehozva:",
-    "lastUsed": "Utoljára használva:"
+    "lastUsed": "Utoljára használva:",
+    "show": "Statisztikák megjelenítése",
+    "hide": "Statisztikák elrejtése"
   },
   "types": {
     "length": "Hossz",

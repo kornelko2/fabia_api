@@ -36,7 +36,8 @@
     "funnyOption": "Vtipné a kreativní",
     "scientificOption": "Vědecké a podrobné",
     "converting": "Převádím na Fabie...",
-    "convert": "Převést na Fabie"
+    "convert": "Převést na Fabie",
+    "options": "Možnosti"
   },
   "result": {
     "title": "Výsledek převodu",
@@ -235,7 +236,9 @@
     "language": "Jazyk:",
     "usedLabel": "Použito:",
     "created": "Vytvořeno:",
-    "lastUsed": "Naposledy použito:"
+    "lastUsed": "Naposledy použito:",
+    "show": "Zobrazit statistiky",
+    "hide": "Skrýt statistiky"
   },
   "types": {
     "length": "Délka",

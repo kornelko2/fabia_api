@@ -36,7 +36,8 @@
     "funnyOption": "Amusant et créatif",
     "scientificOption": "Scientifique et détaillé",
     "converting": "Conversion en Fabia...",
-    "convert": "Convertir en Fabia"
+    "convert": "Convertir en Fabia",
+    "options": "Options"
   },
   "result": {
     "title": "Résultat de la conversion",
@@ -235,7 +236,9 @@
     "language": "Langue :",
     "usedLabel": "Utilisé :",
     "created": "Créé :",
-    "lastUsed": "Dernière utilisation :"
+    "lastUsed": "Dernière utilisation :",
+    "show": "Afficher les statistiques",
+    "hide": "Masquer les statistiques"
   },
   "types": {
     "length": "Longueur",

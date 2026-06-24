@@ -1,13 +1,22 @@
 <template>
   <div class="statistics-section">
     <div class="stats-header">
-      <h3><AppIcon :icon="ChartColumnBig" :size="22" /> {{ $t('stats.title') }}</h3>
-      <button @click="refreshStats" class="refresh-btn" :disabled="loading">
-        <span :class="{ 'loading-spinner': loading }"><AppIcon :icon="RefreshCw" :size="16" /></span>
-        {{ loading ? $t('stats.loading') : $t('stats.refresh') }}
-      </button>
+      <h3 class="stats-title" @click="toggleStats">
+        <AppIcon :icon="ChartColumnBig" :size="22" /> {{ $t('stats.title') }}
+      </h3>
+      <div class="stats-header-actions">
+        <button v-if="statsOpen" @click="refreshStats" class="refresh-btn" :disabled="loading">
+          <span :class="{ 'loading-spinner': loading }"><AppIcon :icon="RefreshCw" :size="16" /></span>
+          {{ loading ? $t('stats.loading') : $t('stats.refresh') }}
+        </button>
+        <button @click="toggleStats" class="stats-toggle" :aria-expanded="statsOpen ? 'true' : 'false'">
+          <AppIcon :icon="statsOpen ? ChevronUp : ChevronDown" :size="18" />
+          {{ statsOpen ? $t('stats.hide') : $t('stats.show') }}
+        </button>
+      </div>
     </div>
 
+    <div v-show="statsOpen" class="stats-collapsible">
     <!-- Loading State -->
     <div v-if="loading && !stats" class="loading-state">
       <div class="loading-spinner"><AppIcon :icon="RefreshCw" :size="24" /></div>
@@ -151,7 +160,9 @@
         <small><AppIcon :icon="Calendar" :size="14" /> {{ $t('stats.lastUpdated', { time: formatTime(stats.lastUpdated) }) }}</small>
       </div>
     </div>
-    
+    </div>
+    <!-- /stats-collapsible -->
+
     <!-- Conversion Details Modal -->
     <div v-if="selectedConversion" class="modal-overlay" @click="closeModal">
       <div class="modal-content" @click.stop>
@@ -262,7 +273,8 @@
 import {
   ChartColumnBig, RefreshCw, CircleX, Car, TrendingUp, Zap, Target, Clock,
   ArrowRight, Share2, Link2, Trophy, Globe, Calendar, Copy, X,
-  Square, Scale, Ruler, Coins, MoveHorizontal, MoveVertical, Fuel
+  Square, Scale, Ruler, Coins, MoveHorizontal, MoveVertical, Fuel,
+  ChevronDown, ChevronUp
 } from '@lucide/vue'
 import AppIcon from './AppIcon.vue'
 
@@ -283,7 +295,8 @@ export default {
   setup() {
     return {
       ChartColumnBig, RefreshCw, CircleX, Car, TrendingUp, Zap, Target, Clock,
-      ArrowRight, Share2, Link2, Trophy, Globe, Calendar, Copy, X
+      ArrowRight, Share2, Link2, Trophy, Globe, Calendar, Copy, X,
+      ChevronDown, ChevronUp
     }
   },
   data() {
@@ -291,6 +304,7 @@ export default {
       stats: null,
       loading: false,
       error: null,
+      statsOpen: true,
       selectedConversion: null,
       showEmbedDialog: false,
       embedCode: '',
@@ -310,10 +324,23 @@ export default {
   },
 
   mounted() {
-    this.refreshStats();
+    // Progressive disclosure: collapsed by default on small screens so the
+    // first screen stays focused on the converter. Only fetch when shown.
+    this.statsOpen = typeof window !== 'undefined' ? window.innerWidth > 768 : true;
+    if (this.statsOpen) {
+      this.refreshStats();
+    }
   },
 
   methods: {
+    toggleStats() {
+      this.statsOpen = !this.statsOpen;
+      // Lazily load stats the first time the section is opened.
+      if (this.statsOpen && !this.stats && !this.loading) {
+        this.refreshStats();
+      }
+    },
+
     async refreshStats() {
       this.loading = true;
       this.error = null;
@@ -480,6 +507,39 @@ export default {
   margin: 0;
   color: var(--skoda-green);
   font-size: 1.5rem;
+}
+
+.stats-title {
+  cursor: pointer;
+  user-select: none;
+}
+
+.stats-header-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.stats-toggle {
+  background: white;
+  color: var(--skoda-green);
+  border: 1px solid var(--skoda-green);
+  padding: 0.5rem 0.75rem;
+  border-radius: 6px;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: 0.875rem;
+  font-weight: 600;
+  text-transform: none;
+  letter-spacing: normal;
+  width: auto;
+  min-width: auto;
+}
+
+.stats-toggle:hover {
+  background: var(--skoda-green-light);
 }
 
 .refresh-btn {

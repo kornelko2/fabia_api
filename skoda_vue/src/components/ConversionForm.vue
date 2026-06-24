@@ -22,38 +22,43 @@
           </div>
         </div>
         
-        <div class="form-row">
-          <div class="form-group">
-            <label for="language-select">{{ $t('form.responseLanguage') }}</label>
-            <select 
-              id="language-select" 
-              v-model="selectedLanguage"
-              :disabled="loading"
-            >
-              <option 
-                v-for="language in languages" 
-                :key="language.code" 
-                :value="language.value"
+        <details class="options-disclosure">
+          <summary class="options-summary">
+            <AppIcon :icon="SlidersHorizontal" :size="16" /> {{ $t('form.options') }}
+          </summary>
+          <div class="form-row">
+            <div class="form-group">
+              <label for="language-select">{{ $t('form.responseLanguage') }}</label>
+              <select
+                id="language-select"
+                v-model="selectedLanguage"
+                :disabled="loading"
               >
-                {{ language.flag }} {{ language.name }}
-              </option>
-            </select>
+                <option
+                  v-for="language in languages"
+                  :key="language.code"
+                  :value="language.value"
+                >
+                  {{ language.flag }} {{ language.name }}
+                </option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label for="explanation-select">{{ $t('form.explanationStyle') }}</label>
+              <select
+                id="explanation-select"
+                v-model="selectedExplanationType"
+                :disabled="loading"
+              >
+                <option value="funny">{{ $t('form.funnyOption') }}</option>
+                <option value="scientific">{{ $t('form.scientificOption') }}</option>
+              </select>
+            </div>
           </div>
-          
-          <div class="form-group">
-            <label for="explanation-select">{{ $t('form.explanationStyle') }}</label>
-            <select
-              id="explanation-select"
-              v-model="selectedExplanationType"
-              :disabled="loading"
-            >
-              <option value="funny">{{ $t('form.funnyOption') }}</option>
-              <option value="scientific">{{ $t('form.scientificOption') }}</option>
-            </select>
-          </div>
-        </div>
-        
-        <button 
+        </details>
+
+        <button
           @click="handleConvert" 
           :disabled="!userInput.trim() || loading"
           class="convert-btn"
@@ -285,7 +290,7 @@
 <script>
 import {
   Car, Target, PartyPopper, FlaskConical, Zap, ChartColumnBig, BookOpen,
-  Copy, Share2, Link2, CircleX, Wrench, Ruler, ArrowRightLeft, X
+  Copy, Share2, Link2, CircleX, Wrench, Ruler, ArrowRightLeft, X, SlidersHorizontal
 } from '@lucide/vue'
 import AppIcon from './AppIcon.vue'
 
@@ -295,7 +300,7 @@ export default {
   setup() {
     return {
       Car, Target, PartyPopper, FlaskConical, Zap, ChartColumnBig, BookOpen,
-      Copy, Share2, Link2, CircleX, Wrench, Ruler, ArrowRightLeft, X
+      Copy, Share2, Link2, CircleX, Wrench, Ruler, ArrowRightLeft, X, SlidersHorizontal
     }
   },
   props: {
@@ -783,11 +788,54 @@ export default {
   font-style: italic;
 }
 
+.options-disclosure {
+  margin-bottom: 1.5rem;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  background: #fafafa;
+}
+
+.options-summary {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.625rem 0.875rem;
+  cursor: pointer;
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: #555;
+  user-select: none;
+  list-style: none;
+}
+
+.options-summary::-webkit-details-marker {
+  display: none;
+}
+
+.options-summary::after {
+  content: '';
+  width: 8px;
+  height: 8px;
+  margin-left: auto;
+  border-right: 2px solid #999;
+  border-bottom: 2px solid #999;
+  transform: rotate(45deg);
+  transition: transform 0.2s ease;
+}
+
+.options-disclosure[open] .options-summary::after {
+  transform: rotate(-135deg);
+}
+
+.options-summary:hover {
+  color: var(--skoda-green);
+}
+
 .form-row {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 1rem;
-  margin-bottom: 1.5rem;
+  padding: 0 0.875rem 0.875rem;
 }
 
 .form-group label {

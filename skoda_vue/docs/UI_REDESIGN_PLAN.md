@@ -27,7 +27,7 @@ post it in chats and link it from their projects.
 ## Phase tracker
 - [x] **Phase 0 — Decide & set up the icon system** (blocking; do first)
 - [x] **Phase 1 — Replace emoji with icons** (depends on Phase 0)
-- [ ] **Phase 2 — Simplify the UI (progressive disclosure)**
+- [x] **Phase 2 — Simplify the UI (progressive disclosure)**
 - [ ] **Phase 3 — Shareability & engagement**
 - [ ] **Phase 4 — Polish, accessibility & QA**
 
@@ -157,18 +157,26 @@ glance. Everything else is available on scroll or behind a toggle.
 5. **Footer** — condensed; About/Privacy/Help stay as modals.
 
 ### Tasks
-- [ ] Make the hero the only above-the-fold block: input + Convert + short
-      subtitle. Move everything else down.
-- [ ] Move **Statistics** below examples; wrap in a collapsible "Show live stats"
-      section (collapsed by default on mobile).
-- [ ] Demote the advanced controls: put **Response Language** + **Explanation
-      Style** behind a small "Options" disclosure with sensible defaults
-      (language = UI language, style = Funny). Keep them reachable, not upfront.
-- [ ] Condense the footer feature list (icons + short labels, not a wall of text).
-- [ ] Tighten copy: shorter labels, fewer sentences; let icons carry meaning.
-- [ ] Add subtle section spacing/dividers so scrolling feels structured.
-- [ ] Re-check all 8 languages — German/Czech strings are longer; ensure no
-      overflow in the simplified layout.
+- [x] Make the hero the only above-the-fold block: input + Convert + short
+      subtitle. Advanced controls moved into the Options disclosure (below).
+- [x] **Statistics** already sits below the converter; wrapped its body in a
+      collapsible section with a Show/Hide toggle (title also toggles).
+      Collapsed by default on mobile (`window.innerWidth <= 768`); lazy-loads
+      `/stats` only when first opened.
+- [x] Demote the advanced controls: **Response Language** + **Explanation Style**
+      now live behind a `<details>` **Options** disclosure (closed by default).
+      Defaults unchanged: style = Funny, language follows the UI language.
+- [x] Condense the footer feature list → two-column grid, smaller text.
+- [-] Tighten copy: **deferred.** Real copy changes mean editing all 8 locale
+      JSON catalogs, which the plan lists as out of scope. Structure/layout was
+      tightened instead; revisit copy as a dedicated locale pass if desired.
+- [x] Section spacing handled via the disclosure card + existing section margins;
+      stats section visually separated by its card + toggle.
+- [x] Re-checked layout incl. longer DE/CS labels (Možnosti / Optionen,
+      Statistiken anzeigen/ausblenden) — fit without overflow.
+
+**New i18n keys added to all 8 locales:** `form.options`, `stats.show`,
+`stats.hide`.
 
 **Acceptance criteria:** on a phone viewport, the first screen shows only
 hero+input+CTA (+ maybe one example); a new user understands what to do without
@@ -275,3 +283,12 @@ interactive controls, clean responsive layout in every language.
   on the Convert button. Kept emoji flags, `<option>` emoji, and generated
   embed-HTML emoji (documented). `npm run build` passes (+~3 kB gzip). Next:
   Phase 2 — simplify the UI (progressive disclosure).
+- 2026-06-24 — Phase 1 fixups: removed Explanation Style `<option>` emoji (plain
+  text) and fixed invisible `.mini-btn` share/embed icons (they inherited the
+  global white button color → set green + inline-flex).
+- 2026-06-24 — Phase 2 done. Advanced selects moved behind an Options `<details>`
+  disclosure; Statistics body made collapsible (Show/Hide, collapsed by default
+  on mobile, lazy-loads stats); footer features condensed to a 2-col grid. Added
+  `form.options` / `stats.show` / `stats.hide` to all 8 locales. Copy-tightening
+  deferred (locale JSON is out of scope). Build passes. Next: Phase 3 —
+  shareability & engagement (OG image, deep-linkable conversions, share affordance).

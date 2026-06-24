@@ -36,7 +36,8 @@
     "funnyOption": "Funny & Creative",
     "scientificOption": "Scientific & Detailed",
     "converting": "Converting to Fabias...",
-    "convert": "Convert to Fabias"
+    "convert": "Convert to Fabias",
+    "options": "Options"
   },
   "result": {
     "title": "Conversion Result",
@@ -235,7 +236,9 @@
     "language": "Language:",
     "usedLabel": "Used:",
     "created": "Created:",
-    "lastUsed": "Last Used:"
+    "lastUsed": "Last Used:",
+    "show": "Show live stats",
+    "hide": "Hide stats"
   },
   "types": {
     "length": "Length",

@@ -36,7 +36,8 @@
     "funnyOption": "Divertido y creativo",
     "scientificOption": "Científico y detallado",
     "converting": "Convirtiendo a Fabias...",
-    "convert": "Convertir a Fabias"
+    "convert": "Convertir a Fabias",
+    "options": "Opciones"
   },
   "result": {
     "title": "Resultado de la conversión",
@@ -235,7 +236,9 @@
     "language": "Idioma:",
     "usedLabel": "Usado:",
     "created": "Creado:",
-    "lastUsed": "Último uso:"
+    "lastUsed": "Último uso:",
+    "show": "Mostrar estadísticas",
+    "hide": "Ocultar estadísticas"
   },
   "types": {
     "length": "Longitud",

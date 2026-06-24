@@ -36,7 +36,8 @@
     "funnyOption": "Lustig & Kreativ",
     "scientificOption": "Wissenschaftlich & Detailliert",
     "converting": "Wird in Fabias umgerechnet...",
-    "convert": "In Fabias umrechnen"
+    "convert": "In Fabias umrechnen",
+    "options": "Optionen"
   },
   "result": {
     "title": "Umrechnungsergebnis",
@@ -235,7 +236,9 @@
     "language": "Sprache:",
     "usedLabel": "Verwendet:",
     "created": "Erstellt:",
-    "lastUsed": "Zuletzt verwendet:"
+    "lastUsed": "Zuletzt verwendet:",
+    "show": "Statistiken anzeigen",
+    "hide": "Statistiken ausblenden"
   },
   "types": {
     "length": "Länge",
