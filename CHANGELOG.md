@@ -7,6 +7,43 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.3.0] - 2026-06-24
+
+UI redesign & icon system (frontend `skoda_vue/`).
+
+### Added
+- Icon system based on `@lucide/vue` with a thin `AppIcon.vue` wrapper
+  (consistent size/stroke, `currentColor`, decorative by default, `label` prop
+  for accessible icon-only controls).
+- **Deep-linkable conversions:** the URL now encodes the conversion as
+  `?q=<input>&lang=<value>&style=<funny|scientific>`. Opening such a link
+  auto-fills and auto-converts; every conversion updates the address bar
+  (`history.replaceState`) so any result is shareable.
+- **Real Open Graph image:** a branded 1200×630 PNG (`public/og-image.png`)
+  generated from an inline SVG via `scripts/make-og-image.mjs` (`npm run
+  og-image`, `sharp` devDependency). `og:image`/`twitter:image` point at it and
+  the Twitter card is now `summary_large_image`.
+- Brand + URL credit line inside the result card so screenshots are
+  self-explanatory.
+- New locale keys (`form.options`, `stats.show`, `stats.hide`) across all 8
+  languages.
+
+### Changed
+- Replaced decorative emoji throughout Header, ConversionForm, Footer and
+  Statistics with Lucide icons; `getTypeIcon()` now returns icon components.
+  (Language flags and native `<select>` options keep emoji by design.)
+- **Progressive disclosure:** advanced controls (Response Language, Explanation
+  Style) moved into a collapsed "Options" disclosure; the Statistics section is
+  now collapsible (collapsed by default on mobile, lazy-loads `/stats`); footer
+  feature list condensed into a two-column grid.
+- **Share** is now the primary (green) result action, ahead of Copy/Embed.
+
+### Accessibility
+- Added visible keyboard `:focus-visible` outlines for buttons, links and
+  summaries; `aria-label`s on all icon-only controls (close, share, embed) and
+  `aria-hidden` on decorative icons.
+- Raised low-contrast secondary text to meet WCAG AA.
+
 ## [0.2.0] - 2026-06-23
 
 ### Fixed

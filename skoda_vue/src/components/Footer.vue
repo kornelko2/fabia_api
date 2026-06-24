@@ -724,7 +724,7 @@ export default {
   gap: 0.5rem;
   margin-top: 0.5rem;
   font-size: 0.75rem;
-  color: #888;
+  color: #6e6e6e;
   flex-wrap: wrap;
 }
 

@@ -29,7 +29,7 @@ post it in chats and link it from their projects.
 - [x] **Phase 1 — Replace emoji with icons** (depends on Phase 0)
 - [x] **Phase 2 — Simplify the UI (progressive disclosure)**
 - [x] **Phase 3 — Shareability & engagement**
-- [ ] **Phase 4 — Polish, accessibility & QA**
+- [~] **Phase 4 — Polish, accessibility & QA** (code done; manual QA + deploy pending)
 
 ---
 
@@ -221,18 +221,29 @@ deploy in Phase 4.)
 ## Phase 4 — Polish, accessibility & QA
 
 ### Tasks
-- [ ] Typography scale + spacing consistency pass (one rhythm across sections).
-- [ ] Color usage: green as accent only; neutral text; sufficient contrast (WCAG AA).
-- [ ] Focus states on all interactive elements; logical tab order.
-- [ ] `aria-label`s verified on icon-only buttons; `aria-hidden` on decorative icons.
-- [ ] Responsive sweep: 360px, 768px, 1280px.
-- [ ] Cross-language sweep: all 8 locales render without overflow.
-- [ ] Lighthouse pass (Performance/Accessibility/Best-Practices/SEO) — aim ≥ 90.
-- [ ] Final `npm run build`, deploy, smoke-test on `fabia-conv.crayz.me`.
-- [ ] Update `CHANGELOG.md` (new `[Unreleased]` → version bump) and tag.
+- [~] Typography scale + spacing consistency — light pass (disclosure card,
+      result credit, footer grid). No full type-scale overhaul; existing rhythm
+      kept. Revisit if a dedicated design pass is wanted.
+- [x] Color usage / contrast — raised low-contrast secondary greys (result
+      credit `#999`→`#6a6a6a`, footer meta `#888`→`#6e6e6e`) to meet WCAG AA;
+      green remains the accent.
+- [x] Focus states — added global `:focus-visible` outlines for buttons, links
+      and `<summary>`, plus a clear input focus ring. Tab order is DOM order.
+- [x] `aria-label`s on icon-only buttons verified (close / share / embed / menu);
+      decorative icons are `aria-hidden` by default via `AppIcon`.
+- [ ] **Responsive sweep (360 / 768 / 1280):** needs a browser — manual QA.
+      Layout is mobile-first with a 768px breakpoint; code reviewed, looks sound.
+- [ ] **Cross-language sweep (8 locales):** needs a browser — manual QA. Longer
+      DE/CS labels were spot-checked during Phase 2.
+- [ ] **Lighthouse ≥ 90:** run by the owner (needs Chrome/CI) after deploy.
+- [~] Final `npm run build` passes. **Deploy + smoke-test on
+      `fabia-conv.crayz.me`** pending — needs the owner's deploy step.
+- [x] `CHANGELOG.md` updated (new `[0.3.0]` section); `skoda_vue` version bumped
+      0.2.0 → 0.3.0. Git tag pending until deploy.
 
-**Acceptance criteria:** Lighthouse ≥ 90 across the board, no a11y violations on
-interactive controls, clean responsive layout in every language.
+**Acceptance criteria:** code-side a11y done (focus + labels + AA contrast);
+Lighthouse, responsive and cross-language sweeps remain as manual QA to run
+against the deployed build.
 
 ---
 
@@ -305,3 +316,9 @@ interactive controls, clean responsive layout in every language.
   brand+URL credit line to the result card. Embed polish + social-proof teaser
   deferred (non-blocking). Build passes. Next: Phase 4 — polish, a11y & QA, then
   deploy (OG preview validates post-deploy).
+- 2026-06-24 — Phase 4 (code) done. Added `:focus-visible` outlines, verified
+  icon-only `aria-label`s + decorative `aria-hidden`, raised low-contrast greys to
+  WCAG AA. Bumped `skoda_vue` 0.2.0 → 0.3.0 and wrote the `[0.3.0]` CHANGELOG
+  entry. Build passes. **Remaining (manual / owner):** responsive sweep
+  (360/768/1280), cross-language sweep (8 locales), Lighthouse ≥ 90, deploy to
+  `fabia-conv.crayz.me` + smoke test, then `git tag v0.3.0`.

@@ -1022,7 +1022,7 @@ export default {
   margin-top: 1rem;
   padding-top: 0.75rem;
   border-top: 1px solid #eee;
-  color: #999;
+  color: #6a6a6a;
   font-size: 0.8125rem;
   font-weight: 600;
 }
