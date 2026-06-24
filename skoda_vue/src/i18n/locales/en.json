@@ -27,7 +27,7 @@
   },
   "form": {
     "title": "How many Škoda Fabias is that?",
-    "description": "Enter any physical measurement and discover how it compares to a Škoda Fabia. The ultimate Fabia-based unit converter!",
+    "description": "Big numbers are hard to picture. Škoda Fabias aren't. Enter any measurement and see how many Fabias it equals.",
     "inputLabel": "Enter your measurement:",
     "placeholder": "e.g., 150000 m², 500 kg, 200 kW, 1000 liters",
     "hint": "Just enter the measurement - we'll tell you how many Fabias that equals!",

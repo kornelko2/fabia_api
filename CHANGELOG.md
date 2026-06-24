@@ -7,6 +7,39 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.4.0] - 2026-06-24
+
+SEO Tier 1 — pre-rendered landing pages (frontend `skoda_vue/`).
+
+### Added
+- **Static site generation** via `vite-ssg` + `vue-router`: routes now pre-render
+  to real static HTML and hydrate into the same SPA. Build is `vite-ssg build`.
+- **8 SEO landing pages** (`/hectare-in-skoda-fabias`, `/eiffel-tower-in-skoda-fabias`,
+  `/blue-whale-in-skoda-fabias`, …), data-driven from `src/content/pages.js`. Each
+  has a unique title/description/canonical, a single `<h1>`, a statically-computed
+  "≈ N Škoda Fabias" answer in the HTML, the live converter prefilled, a visible
+  FAQ, and internal links. Add a page = add a catalog entry.
+- **Structured data:** `FAQPage` JSON-LD per landing page, sitewide `WebSite` +
+  `SearchAction` (sitelinks search box).
+- **Generated `sitemap.xml`** from the catalog (`scripts/make-sitemap.mjs`, wired
+  into `build`) — 9 URLs incl. the OG image.
+- Footer **"Popular comparisons"** internal links (all 8 locales).
+
+### Changed
+- `main.js` exports a `ViteSSG` app; `App.vue` is now the layout
+  (`Header` + `<router-view>` + `Footer`); home content lives in `HomeView`.
+- `ConversionForm` decoupled from the `currentLanguage` prop (uses `$i18n.locale`);
+  gains `initialInput` (landing-page prefill) and `headingLevel` (one `<h1>` per
+  page) props. Footer example chips drive the converter via the `/?q=` deep link.
+- Tightened hero + Open Graph/Twitter copy to lead with the value ("big numbers,
+  finally graspable").
+- Header brand is now a home link (was an `<h1>`) so each page has a single `<h1>`.
+
+### Notes
+- Landing pages are English-only for now; per-language URLs + `hreflang` are a
+  later tier. `getInitialLocale()` and the service-worker registration were made
+  SSR-safe for static generation.
+
 ## [0.3.0] - 2026-06-24
 
 UI redesign & icon system (frontend `skoda_vue/`).

@@ -27,7 +27,7 @@
 - [x] **Phase 0 — Foundation** (router + vite-ssg + SSR-safe i18n; build emits HTML)
 - [x] **Phase 1 — Landing pages** (data-driven SEO pages reusing the converter)
 - [x] **Phase 2 — Structured data & discovery** (FAQ/WebSite JSON-LD, sitemap, links)
-- [ ] **Phase 3 — Copy & QA** (tighten messaging, verify prerendered HTML, redeploy)
+- [~] **Phase 3 — Copy & QA** (code done; deploy + Lighthouse/Search Console pending)
 
 ---
 
@@ -102,12 +102,19 @@ JSON-LD; sitemap lists all 9 URLs; footer links to the pages sitewide.
 
 ## Phase 3 — Copy & QA
 ### Tasks
-- [ ] Tighten hero/meta messaging (intuition-first: "big numbers, finally graspable").
-- [ ] Verify prerendered HTML via `curl`/view-source (content present without JS).
-- [ ] `npm run build`, redeploy, re-run Lighthouse (watch SEO + perf).
-- [ ] Bump version + CHANGELOG; update sitemap `lastmod`.
+- [x] Tightened hero subtitle (English `form.description`) and the meta /
+      og:description / twitter:description to lead with the value
+      ("big numbers, finally graspable").
+- [x] View-source QA: built HTML for home + landing pages contains the title,
+      hero copy, H1, FAQ and footer links **without JS**.
+- [x] `npm run build` passes; `sitemap.xml` `lastmod` auto-set to build date.
+- [x] Bumped `skoda_vue` 0.3.0 → 0.4.0 and wrote the `[0.4.0]` CHANGELOG entry.
+- [ ] **Redeploy** to `fabia-conv.crayz.me` (owner's manual step).
+- [ ] **Post-deploy:** re-run Lighthouse (watch SEO/perf), resubmit `sitemap.xml`
+      in Google Search Console, validate a landing page in the Rich Results test.
 
-**Acceptance:** view-source shows real content per page; Lighthouse SEO stays 100.
+**Acceptance:** met (code) — view-source shows real content per page. Lighthouse +
+Search Console validation happen against the deployed build.
 
 ---
 
@@ -137,3 +144,7 @@ JSON-LD; sitemap lists all 9 URLs; footer links to the pages sitewide.
   footer "Popular comparisons" links (8 locales). Verified all JSON-LD + sitemap
   in the built output. Next: Phase 3 — messaging/copy polish, view-source check,
   redeploy + Lighthouse.
+- 2026-06-24 — Phase 3 (code) done. Tightened hero + og/twitter copy; view-source
+  QA confirms prerendered content without JS; bumped to 0.4.0 + CHANGELOG. SEO
+  Tier 1 is code-complete. **Remaining (owner):** deploy, then re-run Lighthouse,
+  resubmit sitemap in Search Console, validate Rich Results.
