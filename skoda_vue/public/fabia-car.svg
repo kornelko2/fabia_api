@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 492 232" width="492" height="232" role="img" aria-label="Škoda Fabia">
+  <path d="M14,150
+    C14,140 22,134 36,132
+    L78,128
+    C96,86 134,62 196,60
+    L300,60
+    C360,62 392,92 414,128
+    L452,134
+    C470,137 478,144 478,156
+    L478,176
+    C478,184 472,190 462,190
+    L432,190
+    A30,30 0 0 0 372,190
+    L168,190
+    A30,30 0 0 0 108,190
+    L30,190
+    C20,190 14,184 14,176
+    Z"
+    fill="#00A651" stroke="#008a44" stroke-width="3" stroke-linejoin="round"/>
+  <path d="M120,124 C140,92 168,78 210,76 L292,76 C340,78 366,98 386,124 Z" fill="#d8f3e2"/>
+  <line x1="252" y1="76" x2="252" y2="124" stroke="#00A651" stroke-width="3"/>
+  <circle cx="138" cy="190" r="34" fill="#1a1a1a"/>
+  <circle cx="138" cy="190" r="15" fill="#cfcfcf"/>
+  <circle cx="402" cy="190" r="34" fill="#1a1a1a"/>
+  <circle cx="402" cy="190" r="15" fill="#cfcfcf"/>
+</svg>

@@ -3,7 +3,7 @@
     <div class="container">
       <div class="header-content">
         <div class="brand">
-          <img src="/skoda-fabia-logo.svg" alt="Škoda Fabia" class="logo">
+          <img src="/fabia-car.svg" alt="Škoda Fabia" class="logo">
           <div class="brand-text">
             <h1>Škoda Fabia Converter</h1>
             <span class="tagline">{{ $t('header.tagline') }}</span>

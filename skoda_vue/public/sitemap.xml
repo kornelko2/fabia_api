@@ -1,9 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
   <url>
     <loc>https://fabia-conv.crayz.me/</loc>
-    <lastmod>2026-06-23</lastmod>
+    <lastmod>2026-06-24</lastmod>
     <changefreq>monthly</changefreq>
     <priority>1.0</priority>
+    <image:image>
+      <image:loc>https://fabia-conv.crayz.me/og-image.png</image:loc>
+      <image:title>Škoda Fabia Converter — measure everything in Škoda Fabias</image:title>
+      <image:caption>Branded preview card for the Škoda Fabia unit converter.</image:caption>
+    </image:image>
   </url>
 </urlset>
