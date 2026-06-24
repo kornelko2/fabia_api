@@ -49,8 +49,8 @@
         <div class="footer-section">
           <h4>{{ $t('footer.popularComparisons') }}</h4>
           <ul class="comparison-links">
-            <li v-for="p in comparisonPages" :key="p.slug">
-              <router-link :to="'/' + p.slug">{{ pageLabel(p) }}</router-link>
+            <li v-for="p in comparisonPages" :key="p.locales.en.slug">
+              <router-link :to="linkFor(p)">{{ pageLabel(p) }}</router-link>
             </li>
           </ul>
         </div>
@@ -297,7 +297,7 @@
 <script>
 import { Radio, Car, BrainCircuit, Globe, Smartphone, Zap, Target, ArrowUp, Share2, X } from '@lucide/vue'
 import AppIcon from './AppIcon.vue'
-import { pages } from '../content/pages.js'
+import { pages, LOCALES, pagePath } from '../content/pages.js'
 
 export default {
   name: 'AppFooter',
@@ -308,6 +308,10 @@ export default {
   computed: {
     comparisonPages() {
       return pages.slice(0, 6)
+    },
+    // Only en/cs have prerendered pages; any other UI language falls back to en.
+    targetLoc() {
+      return LOCALES.includes(this.$i18n.locale) ? this.$i18n.locale : 'en'
     }
   },
   data() {
@@ -351,10 +355,17 @@ export default {
     this.loadStats();
   },
   methods: {
+    linkFor(p) {
+      return pagePath(p.locales[this.targetLoc].slug, this.targetLoc)
+    },
+
     pageLabel(p) {
       // Derive a short link label from the slug, e.g.
       // "blue-whale-in-skoda-fabias" -> "Blue whale".
-      const base = p.slug.replace('-in-skoda-fabias', '').replace(/-/g, ' ')
+      const base = p.locales[this.targetLoc].slug
+        .replace('-in-skoda-fabias', '')
+        .replace('-ve-skoda-fabiich', '')
+        .replace(/-/g, ' ')
       return base.charAt(0).toUpperCase() + base.slice(1)
     },
 

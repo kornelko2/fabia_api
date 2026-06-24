@@ -7,6 +7,29 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.5.0] - 2026-06-24
+
+Czech localization of the SEO landing pages (Tier 2).
+
+### Added
+- **Czech mutations of every landing page** at `/cs/<czech-slug>` (e.g.
+  `/cs/hektar-ve-skoda-fabiich`) plus a Czech home at `/cs/`, all pre-rendered in
+  Czech — including the converter UI, with Czech number formatting.
+- **`hreflang`** alternates (en / cs / x-default) on every page and as
+  `xhtml:link` entries in `sitemap.xml` (now 18 URLs across 2 locales).
+- A `landing.*` i18n block (en + cs) for the landing-page UI strings, FAQ
+  templates and reference labels.
+
+### Changed
+- `src/content/pages.js` restructured to per-locale content (`locales.en` /
+  `locales.cs`) with `LOCALES` / `pagePath()` helpers; routes generated for both
+  locales.
+- i18n is now created **per app instance** (`createI18nInstance()`), so each
+  vite-ssg route renders in its own locale without leakage.
+- `LandingView`/`HomeView` force their route's locale and emit per-locale
+  canonical + hreflang + og:locale; footer comparison links resolve to the
+  current locale's slug.
+
 ## [0.4.0] - 2026-06-24
 
 SEO Tier 1 — pre-rendered landing pages (frontend `skoda_vue/`).

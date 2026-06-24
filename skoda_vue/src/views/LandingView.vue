@@ -3,23 +3,19 @@
     <div class="container">
       <article class="landing-intro card">
         <p class="crumb">
-          <router-link to="/">← Škoda Fabia Converter</router-link>
+          <router-link :to="homeLink">← Škoda Fabia Converter</router-link>
         </p>
-        <h1>{{ page.h1 }}</h1>
-        <p class="answer">≈ <strong>{{ fabias.toLocaleString() }}</strong> Škoda Fabias</p>
-        <p class="intro">{{ page.intro }}</p>
-        <p class="how">
-          Each Škoda Fabia 1.2 HTP measures {{ refLabel }} — so
-          {{ page.example }} works out to roughly {{ fabias.toLocaleString() }} of them.
-          Want a different figure? Tweak it below or type any measurement.
-        </p>
+        <h1>{{ content.h1 }}</h1>
+        <p class="answer">≈ <strong>{{ nfmt }}</strong> {{ t('landing.answerUnit') }}</p>
+        <p class="intro">{{ content.intro }}</p>
+        <p class="how">{{ t('landing.how', { ref: refLabel, example: content.example, n: nfmt }) }}</p>
       </article>
 
       <!-- The real converter, prefilled with this page's example -->
-      <ConversionForm :initial-input="page.example" heading-level="h2" />
+      <ConversionForm :initial-input="content.example" heading-level="h2" />
 
       <section class="faq card">
-        <h2>Frequently asked</h2>
+        <h2>{{ t('landing.faqTitle') }}</h2>
         <div v-for="(item, i) in faqs" :key="i" class="faq-item">
           <h3>{{ item.q }}</h3>
           <p>{{ item.a }}</p>
@@ -27,14 +23,14 @@
       </section>
 
       <section class="more card">
-        <h2>More Škoda Fabia comparisons</h2>
+        <h2>{{ t('landing.moreTitle') }}</h2>
         <ul class="more-links">
-          <li v-for="p in others" :key="p.slug">
-            <router-link :to="'/' + p.slug">{{ p.h1 }}</router-link>
+          <li v-for="p in others" :key="p.locales[locale].slug">
+            <router-link :to="otherLink(p)">{{ p.locales[locale].h1 }}</router-link>
           </li>
         </ul>
         <p>
-          <router-link to="/" class="open-converter">→ Open the full converter</router-link>
+          <router-link :to="homeLink" class="open-converter">{{ t('landing.openConverter') }}</router-link>
         </p>
       </section>
     </div>
@@ -43,45 +39,40 @@
 
 <script setup>
 import { computed } from 'vue'
+import { useI18n } from 'vue-i18n'
 import { useHead } from '@unhead/vue'
 import ConversionForm from '../components/ConversionForm.vue'
-import { pages, REFERENCES } from '../content/pages.js'
+import { pages, REFERENCES, LOCALES, DEFAULT_LOCALE, pagePath } from '../content/pages.js'
 
 const props = defineProps({
-  page: { type: Object, required: true }
+  page: { type: Object, required: true },
+  locale: { type: String, default: 'en' }
 })
 
+const SITE = 'https://fabia-conv.crayz.me'
+
+const { t, locale: i18nLocale } = useI18n({ useScope: 'global' })
+// Render this page in its own locale (affects the prerendered HTML and the
+// hydrated UI/converter).
+i18nLocale.value = props.locale
+
+const content = computed(() => props.page.locales[props.locale])
 const fabias = computed(() => Math.round(props.page.value / REFERENCES[props.page.type]))
-const others = computed(() => pages.filter(p => p.slug !== props.page.slug).slice(0, 6))
+const nfmt = computed(() => fabias.value.toLocaleString(props.locale === 'cs' ? 'cs-CZ' : 'en-US'))
+const refLabel = computed(() => t('landing.ref.' + props.page.type))
 
-const REF_LABEL = {
-  area: '6.587 m² of ground',
-  length: '4.002 m bumper to bumper',
-  weight: '1,035 kg',
-  price: '€16,500',
-  power: '64 HP'
-}
-const refLabel = computed(() => REF_LABEL[props.page.type] || '')
+const homeLink = computed(() => (props.locale === DEFAULT_LOCALE ? '/' : `/${props.locale}/`))
+const others = computed(() => pages.filter(p => p !== props.page).slice(0, 6))
+const otherLink = (p) => pagePath(p.locales[props.locale].slug, props.locale)
 
-const canonical = computed(() => `https://fabia-conv.crayz.me/${props.page.slug}`)
+const canonical = computed(() => SITE + pagePath(content.value.slug, props.locale))
 
-// Visible FAQ — also emitted as FAQPage structured data below. Google requires
-// the schema's Q&As to match content visible on the page, so these are the same.
 const faqs = computed(() => {
-  const n = fabias.value.toLocaleString()
+  const params = { n: nfmt.value, example: content.value.example, ref: refLabel.value }
   return [
-    {
-      q: props.page.h1,
-      a: `${props.page.example} is about ${n} Škoda Fabias, because each Fabia 1.2 HTP measures ${refLabel.value}.`
-    },
-    {
-      q: `How is "${props.page.example}" converted into Škoda Fabias?`,
-      a: `We divide ${props.page.example} by a single Škoda Fabia 1.2 HTP (${refLabel.value}), which gives roughly ${n} Fabias.`
-    },
-    {
-      q: 'What is the Škoda Fabia Converter?',
-      a: 'A free, playful tool that expresses any measurement — length, area, weight, power or price — as how many Škoda Fabias it equals, with AI-written explanations in 8 languages.'
-    }
+    { q: content.value.h1, a: t('landing.faqA1', params) },
+    { q: t('landing.faqQ2', params), a: t('landing.faqA2', params) },
+    { q: t('landing.faqQ3'), a: t('landing.faqA3') }
   ]
 })
 
@@ -96,20 +87,31 @@ const faqJsonLd = computed(() => JSON.stringify({
 }))
 
 useHead(() => ({
-  title: props.page.title,
+  title: content.value.title,
   meta: [
-    { name: 'description', content: props.page.description },
-    { property: 'og:title', content: props.page.title },
-    { property: 'og:description', content: props.page.description },
+    { name: 'description', content: content.value.description },
+    { property: 'og:title', content: content.value.title },
+    { property: 'og:description', content: content.value.description },
     { property: 'og:url', content: canonical.value },
     { property: 'og:type', content: 'article' },
-    { name: 'twitter:title', content: props.page.title },
-    { name: 'twitter:description', content: props.page.description }
+    { property: 'og:locale', content: props.locale === 'cs' ? 'cs_CZ' : 'en_US' },
+    { name: 'twitter:title', content: content.value.title },
+    { name: 'twitter:description', content: content.value.description }
   ],
-  link: [{ rel: 'canonical', href: canonical.value }],
-  script: [
-    { type: 'application/ld+json', innerHTML: faqJsonLd.value }
-  ]
+  link: [
+    { rel: 'canonical', href: canonical.value },
+    ...LOCALES.map(l => ({
+      rel: 'alternate',
+      hreflang: l,
+      href: SITE + pagePath(props.page.locales[l].slug, l)
+    })),
+    {
+      rel: 'alternate',
+      hreflang: 'x-default',
+      href: SITE + pagePath(props.page.locales[DEFAULT_LOCALE].slug, DEFAULT_LOCALE)
+    }
+  ],
+  script: [{ type: 'application/ld+json', innerHTML: faqJsonLd.value }]
 }))
 </script>
 
@@ -196,12 +198,6 @@ useHead(() => ({
 
 .more {
   margin-top: 1.5rem;
-}
-
-.more h2 {
-  color: var(--skoda-green);
-  font-size: 1.1rem;
-  margin-bottom: 0.75rem;
 }
 
 .more-links {

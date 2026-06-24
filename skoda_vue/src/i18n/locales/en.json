@@ -250,5 +250,24 @@
     "price": "Price",
     "power": "Power",
     "consumption": "Consumption"
+  },
+  "landing": {
+    "answerUnit": "Škoda Fabias",
+    "faqTitle": "Frequently asked",
+    "moreTitle": "More Škoda Fabia comparisons",
+    "openConverter": "→ Open the full converter",
+    "how": "Each Škoda Fabia 1.2 HTP measures {ref} — so {example} works out to roughly {n} of them. Want a different figure? Tweak it below or type any measurement.",
+    "faqQ2": "How is \"{example}\" converted into Škoda Fabias?",
+    "faqA1": "{example} is about {n} Škoda Fabias, because each Fabia 1.2 HTP measures {ref}.",
+    "faqA2": "We divide {example} by a single Škoda Fabia 1.2 HTP ({ref}), which gives roughly {n} Fabias.",
+    "faqQ3": "What is the Škoda Fabia Converter?",
+    "faqA3": "A free, playful tool that expresses any measurement — length, area, weight, power or price — as how many Škoda Fabias it equals, with AI-written explanations in 8 languages.",
+    "ref": {
+      "area": "6.587 m² of ground",
+      "length": "4.002 m bumper to bumper",
+      "weight": "1,035 kg",
+      "price": "€16,500",
+      "power": "64 HP"
+    }
   }
 }

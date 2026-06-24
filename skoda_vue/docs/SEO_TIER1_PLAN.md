@@ -28,6 +28,7 @@
 - [x] **Phase 1 — Landing pages** (data-driven SEO pages reusing the converter)
 - [x] **Phase 2 — Structured data & discovery** (FAQ/WebSite JSON-LD, sitemap, links)
 - [~] **Phase 3 — Copy & QA** (code done; deploy + Lighthouse/Search Console pending)
+- [x] **Phase 4 — Czech localization (Tier 2)** (cs landing pages + /cs/ home + hreflang)
 
 ---
 
@@ -118,6 +119,37 @@ Search Console validation happen against the deployed build.
 
 ---
 
+## Phase 4 — Czech localization (Tier 2, added on request)
+**Goal:** Czech is the primary market — give the SEO pages a Czech mutation with
+proper per-language URLs and `hreflang`.
+
+### Done
+- [x] `pages.js` restructured to per-locale content (`locales.en` / `locales.cs`),
+      with hand-written Czech titles/descriptions/H1s/intros and Czech slugs
+      (e.g. `/cs/hektar-ve-skoda-fabiich`). `LOCALES`, `DEFAULT_LOCALE`, `pagePath()`.
+- [x] Landing UI strings + reference labels moved to a `landing.*` i18n block
+      (en + cs); answers formatted with `toLocaleString('cs-CZ')`.
+- [x] `LandingView` is locale-aware: forces its locale at render, localized
+      content/FAQ, `canonical` + full `hreflang` (en/cs/x-default) + `og:locale`.
+- [x] **Per-app i18n** (`createI18nInstance()` in the ViteSSG setup) so each
+      prerendered route renders in its own locale with no leakage. Verified: EN
+      pages stay English, CS pages render fully in Czech (incl. the converter UI).
+- [x] Routes: `/`, `/cs/` (Czech home), `/<slug>` (en), `/cs/<slug>` (cs).
+      `HomeView` takes a `locale` prop and emits home `hreflang` + Czech meta.
+- [x] Footer "Popular comparisons" links resolve to the current locale's slug
+      (falls back to en for the other 6 UI languages, which have no pages).
+- [x] Sitemap regenerated for both locales **with `xhtml:link` hreflang
+      alternates** — 18 URLs, 3 alternates each.
+
+**Acceptance:** met — `npm run build` emits 18 prerendered HTML files (9 en + 9 cs);
+each CS page is Czech with correct canonical + hreflang; sitemap covers every URL
+with alternates.
+
+**Follow-ups (not done):** the header language switch still sets locale in place
+(doesn't navigate to the locale's URL); only en+cs have pages (the other 6 UI
+languages remain client-side on `/`). Per-page "view in Čeština / English" links
+could be added if wanted.
+
 ## Risks / watch-list
 - **i18n in SSR:** `legacy:false` + `globalInjection` is SSR-friendly; just guard
   browser globals. Prerender renders in `en`.
@@ -148,3 +180,9 @@ Search Console validation happen against the deployed build.
   QA confirms prerendered content without JS; bumped to 0.4.0 + CHANGELOG. SEO
   Tier 1 is code-complete. **Remaining (owner):** deploy, then re-run Lighthouse,
   resubmit sitemap in Search Console, validate Rich Results.
+- 2026-06-24 — Phase 4 (Czech, Tier 2) done. Per-locale `pages.js` + Czech copy +
+  Czech slugs; `/cs/` home + `/cs/<slug>` landing pages; locale-aware
+  `LandingView`/`HomeView` with hreflang; per-app i18n for SSG isolation; sitemap
+  with hreflang alternates (18 URLs). Build emits 9 en + 9 cs prerendered files,
+  verified Czech rendering + cross-locale hreflang. Still pending: deploy +
+  Search Console (submit sitemap, confirm hreflang/Rich Results on the live site).

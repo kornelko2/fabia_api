@@ -1,16 +1,28 @@
 import HomeView from '../views/HomeView.vue'
 import LandingView from '../views/LandingView.vue'
-import { pages } from '../content/pages.js'
+import { pages, LOCALES, DEFAULT_LOCALE, pagePath } from '../content/pages.js'
 
-// Static routes. vite-ssg pre-renders each of these to its own HTML file.
-// Landing/SEO pages are generated from the data-driven catalog (pages.js):
-// each becomes a static `/<slug>` route that gets its own prerendered HTML.
+// Static routes — vite-ssg pre-renders each to its own HTML file.
+//   /            English home
+//   /cs/         Czech home
+//   /<slug>      English landing pages
+//   /cs/<slug>   Czech landing pages
+const landingRoutes = pages.flatMap(page =>
+  LOCALES.map(locale => ({
+    path: pagePath(page.locales[locale].slug, locale),
+    name: `${locale}-${page.locales[locale].slug}`,
+    component: LandingView,
+    props: { page, locale }
+  }))
+)
+
 export const routes = [
   { path: '/', name: 'home', component: HomeView },
-  ...pages.map(page => ({
-    path: `/${page.slug}`,
-    name: page.slug,
-    component: LandingView,
-    props: { page }
-  }))
+  ...LOCALES.filter(l => l !== DEFAULT_LOCALE).map(locale => ({
+    path: `/${locale}/`,
+    name: `home-${locale}`,
+    component: HomeView,
+    props: { locale }
+  })),
+  ...landingRoutes
 ]

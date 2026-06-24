@@ -12,7 +12,8 @@ export const SUPPORTED_LOCALES = ['cs', 'sk', 'hu', 'pl', 'en', 'de', 'es', 'fr'
 
 function getInitialLocale() {
   // SSR/SSG-safe: during static generation there is no window/localStorage.
-  // Prerender in the default locale; the client picks the real one on hydration.
+  // Each prerendered route renders in the default locale, then the matching
+  // view forces its own locale; the client picks the real one on hydration.
   if (typeof window === 'undefined') return 'en'
   try {
     const saved = localStorage.getItem('preferred-language')
@@ -22,12 +23,16 @@ function getInitialLocale() {
   return SUPPORTED_LOCALES.includes(browser) ? browser : 'en'
 }
 
-const i18n = createI18n({
-  legacy: false,
-  globalInjection: true,
-  locale: getInitialLocale(),
-  fallbackLocale: 'en',
-  messages: { en, cs, sk, hu, pl, de, es, fr }
-})
+// Factory so each vite-ssg page render gets a fresh i18n instance — prevents the
+// active locale from leaking between prerendered routes during static generation.
+export function createI18nInstance() {
+  return createI18n({
+    legacy: false,
+    globalInjection: true,
+    locale: getInitialLocale(),
+    fallbackLocale: 'en',
+    messages: { en, cs, sk, hu, pl, de, es, fr }
+  })
+}
 
-export default i18n
+export default createI18nInstance

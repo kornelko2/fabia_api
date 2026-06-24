@@ -1,11 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:xhtml="http://www.w3.org/1999/xhtml"
         xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
   <url>
     <loc>https://fabia-conv.crayz.me/</loc>
     <lastmod>2026-06-24</lastmod>
     <changefreq>monthly</changefreq>
     <priority>1.0</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://fabia-conv.crayz.me/"/>
+    <xhtml:link rel="alternate" hreflang="cs" href="https://fabia-conv.crayz.me/cs/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://fabia-conv.crayz.me/"/>
     <image:image>
       <image:loc>https://fabia-conv.crayz.me/og-image.png</image:loc>
       <image:title>Škoda Fabia Converter — measure everything in Škoda Fabias</image:title>
@@ -13,51 +17,156 @@
     </image:image>
   </url>
   <url>
+    <loc>https://fabia-conv.crayz.me/cs/</loc>
+    <lastmod>2026-06-24</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://fabia-conv.crayz.me/"/>
+    <xhtml:link rel="alternate" hreflang="cs" href="https://fabia-conv.crayz.me/cs/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://fabia-conv.crayz.me/"/>
+  </url>
+  <url>
     <loc>https://fabia-conv.crayz.me/hectare-in-skoda-fabias</loc>
     <lastmod>2026-06-24</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://fabia-conv.crayz.me/hectare-in-skoda-fabias"/>
+    <xhtml:link rel="alternate" hreflang="cs" href="https://fabia-conv.crayz.me/cs/hektar-ve-skoda-fabiich"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://fabia-conv.crayz.me/hectare-in-skoda-fabias"/>
+  </url>
+  <url>
+    <loc>https://fabia-conv.crayz.me/cs/hektar-ve-skoda-fabiich</loc>
+    <lastmod>2026-06-24</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://fabia-conv.crayz.me/hectare-in-skoda-fabias"/>
+    <xhtml:link rel="alternate" hreflang="cs" href="https://fabia-conv.crayz.me/cs/hektar-ve-skoda-fabiich"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://fabia-conv.crayz.me/hectare-in-skoda-fabias"/>
   </url>
   <url>
     <loc>https://fabia-conv.crayz.me/football-field-in-skoda-fabias</loc>
     <lastmod>2026-06-24</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://fabia-conv.crayz.me/football-field-in-skoda-fabias"/>
+    <xhtml:link rel="alternate" hreflang="cs" href="https://fabia-conv.crayz.me/cs/fotbalove-hriste-ve-skoda-fabiich"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://fabia-conv.crayz.me/football-field-in-skoda-fabias"/>
+  </url>
+  <url>
+    <loc>https://fabia-conv.crayz.me/cs/fotbalove-hriste-ve-skoda-fabiich</loc>
+    <lastmod>2026-06-24</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://fabia-conv.crayz.me/football-field-in-skoda-fabias"/>
+    <xhtml:link rel="alternate" hreflang="cs" href="https://fabia-conv.crayz.me/cs/fotbalove-hriste-ve-skoda-fabiich"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://fabia-conv.crayz.me/football-field-in-skoda-fabias"/>
   </url>
   <url>
     <loc>https://fabia-conv.crayz.me/tennis-court-in-skoda-fabias</loc>
     <lastmod>2026-06-24</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://fabia-conv.crayz.me/tennis-court-in-skoda-fabias"/>
+    <xhtml:link rel="alternate" hreflang="cs" href="https://fabia-conv.crayz.me/cs/tenisovy-kurt-ve-skoda-fabiich"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://fabia-conv.crayz.me/tennis-court-in-skoda-fabias"/>
+  </url>
+  <url>
+    <loc>https://fabia-conv.crayz.me/cs/tenisovy-kurt-ve-skoda-fabiich</loc>
+    <lastmod>2026-06-24</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://fabia-conv.crayz.me/tennis-court-in-skoda-fabias"/>
+    <xhtml:link rel="alternate" hreflang="cs" href="https://fabia-conv.crayz.me/cs/tenisovy-kurt-ve-skoda-fabiich"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://fabia-conv.crayz.me/tennis-court-in-skoda-fabias"/>
   </url>
   <url>
     <loc>https://fabia-conv.crayz.me/eiffel-tower-in-skoda-fabias</loc>
     <lastmod>2026-06-24</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://fabia-conv.crayz.me/eiffel-tower-in-skoda-fabias"/>
+    <xhtml:link rel="alternate" hreflang="cs" href="https://fabia-conv.crayz.me/cs/eiffelova-vez-ve-skoda-fabiich"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://fabia-conv.crayz.me/eiffel-tower-in-skoda-fabias"/>
+  </url>
+  <url>
+    <loc>https://fabia-conv.crayz.me/cs/eiffelova-vez-ve-skoda-fabiich</loc>
+    <lastmod>2026-06-24</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://fabia-conv.crayz.me/eiffel-tower-in-skoda-fabias"/>
+    <xhtml:link rel="alternate" hreflang="cs" href="https://fabia-conv.crayz.me/cs/eiffelova-vez-ve-skoda-fabiich"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://fabia-conv.crayz.me/eiffel-tower-in-skoda-fabias"/>
   </url>
   <url>
     <loc>https://fabia-conv.crayz.me/olympic-pool-in-skoda-fabias</loc>
     <lastmod>2026-06-24</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://fabia-conv.crayz.me/olympic-pool-in-skoda-fabias"/>
+    <xhtml:link rel="alternate" hreflang="cs" href="https://fabia-conv.crayz.me/cs/olympijsky-bazen-ve-skoda-fabiich"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://fabia-conv.crayz.me/olympic-pool-in-skoda-fabias"/>
+  </url>
+  <url>
+    <loc>https://fabia-conv.crayz.me/cs/olympijsky-bazen-ve-skoda-fabiich</loc>
+    <lastmod>2026-06-24</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://fabia-conv.crayz.me/olympic-pool-in-skoda-fabias"/>
+    <xhtml:link rel="alternate" hreflang="cs" href="https://fabia-conv.crayz.me/cs/olympijsky-bazen-ve-skoda-fabiich"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://fabia-conv.crayz.me/olympic-pool-in-skoda-fabias"/>
   </url>
   <url>
     <loc>https://fabia-conv.crayz.me/kilometer-in-skoda-fabias</loc>
     <lastmod>2026-06-24</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://fabia-conv.crayz.me/kilometer-in-skoda-fabias"/>
+    <xhtml:link rel="alternate" hreflang="cs" href="https://fabia-conv.crayz.me/cs/kilometr-ve-skoda-fabiich"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://fabia-conv.crayz.me/kilometer-in-skoda-fabias"/>
+  </url>
+  <url>
+    <loc>https://fabia-conv.crayz.me/cs/kilometr-ve-skoda-fabiich</loc>
+    <lastmod>2026-06-24</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://fabia-conv.crayz.me/kilometer-in-skoda-fabias"/>
+    <xhtml:link rel="alternate" hreflang="cs" href="https://fabia-conv.crayz.me/cs/kilometr-ve-skoda-fabiich"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://fabia-conv.crayz.me/kilometer-in-skoda-fabias"/>
   </url>
   <url>
     <loc>https://fabia-conv.crayz.me/elephant-in-skoda-fabias</loc>
     <lastmod>2026-06-24</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://fabia-conv.crayz.me/elephant-in-skoda-fabias"/>
+    <xhtml:link rel="alternate" hreflang="cs" href="https://fabia-conv.crayz.me/cs/slon-ve-skoda-fabiich"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://fabia-conv.crayz.me/elephant-in-skoda-fabias"/>
+  </url>
+  <url>
+    <loc>https://fabia-conv.crayz.me/cs/slon-ve-skoda-fabiich</loc>
+    <lastmod>2026-06-24</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://fabia-conv.crayz.me/elephant-in-skoda-fabias"/>
+    <xhtml:link rel="alternate" hreflang="cs" href="https://fabia-conv.crayz.me/cs/slon-ve-skoda-fabiich"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://fabia-conv.crayz.me/elephant-in-skoda-fabias"/>
   </url>
   <url>
     <loc>https://fabia-conv.crayz.me/blue-whale-in-skoda-fabias</loc>
     <lastmod>2026-06-24</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://fabia-conv.crayz.me/blue-whale-in-skoda-fabias"/>
+    <xhtml:link rel="alternate" hreflang="cs" href="https://fabia-conv.crayz.me/cs/plejtvak-ve-skoda-fabiich"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://fabia-conv.crayz.me/blue-whale-in-skoda-fabias"/>
+  </url>
+  <url>
+    <loc>https://fabia-conv.crayz.me/cs/plejtvak-ve-skoda-fabiich</loc>
+    <lastmod>2026-06-24</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://fabia-conv.crayz.me/blue-whale-in-skoda-fabias"/>
+    <xhtml:link rel="alternate" hreflang="cs" href="https://fabia-conv.crayz.me/cs/plejtvak-ve-skoda-fabiich"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://fabia-conv.crayz.me/blue-whale-in-skoda-fabias"/>
   </url>
 </urlset>

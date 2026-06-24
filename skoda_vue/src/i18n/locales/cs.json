@@ -250,5 +250,24 @@
     "price": "Cena",
     "power": "Výkon",
     "consumption": "Spotřeba"
+  },
+  "landing": {
+    "answerUnit": "Škoda Fabií",
+    "faqTitle": "Časté dotazy",
+    "moreTitle": "Další srovnání se Škodou Fabia",
+    "openConverter": "→ Otevřít celý převodník",
+    "how": "Každá Škoda Fabia 1.2 HTP měří {ref} — takže {example} odpovídá zhruba {n} vozům. Chcete jiné číslo? Upravte ho níže nebo zadejte libovolnou veličinu.",
+    "faqQ2": "Jak se „{example}“ převádí na Škoda Fabie?",
+    "faqA1": "{example} je zhruba {n} Škoda Fabií, protože každá Fabia 1.2 HTP měří {ref}.",
+    "faqA2": "Vydělíme {example} jedním vozem Škoda Fabia 1.2 HTP ({ref}), což dá přibližně {n} Fabií.",
+    "faqQ3": "Co je převodník Škoda Fabia?",
+    "faqA3": "Bezplatný a hravý nástroj, který vyjádří libovolnou veličinu — délku, plochu, hmotnost, výkon nebo cenu — počtem vozů Škoda Fabia, s vysvětlením od AI v 8 jazycích.",
+    "ref": {
+      "area": "6,587 m² plochy",
+      "length": "4,002 m na délku",
+      "weight": "1 035 kg",
+      "price": "16 500 €",
+      "power": "64 koní"
+    }
   }
 }
