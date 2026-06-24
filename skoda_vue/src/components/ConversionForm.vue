@@ -3,7 +3,7 @@
     <div class="container">
       <!-- Input Section -->
       <div class="input-section card">
-        <h2><AppIcon :icon="Car" :size="24" /> {{ $t('form.title') }}</h2>
+        <component :is="headingLevel" class="form-title"><AppIcon :icon="Car" :size="24" /> {{ $t('form.title') }}</component>
         <p class="section-description">{{ $t('form.description') }}</p>
 
         <div class="input-group">
@@ -308,6 +308,14 @@ export default {
       Copy, Share2, Link2, CircleX, Wrench, Ruler, ArrowRightLeft, X, SlidersHorizontal
     }
   },
+  props: {
+    // Optional measurement to prefill the input with (used by landing pages).
+    // The deep-link ?q= param takes precedence over this.
+    initialInput: { type: String, default: '' },
+    // Heading tag for the form title — 'h1' on the home page (it's the page's
+    // main heading), 'h2' on landing pages (which already own the <h1>).
+    headingLevel: { type: String, default: 'h1' }
+  },
   data() {
     return {
       userInput: '',
@@ -388,7 +396,14 @@ export default {
     }
   },
   mounted() {
-    this.applyDeepLink();
+    const hasQuery = new URLSearchParams(window.location.search).has('q');
+    if (hasQuery) {
+      this.applyDeepLink();
+    } else if (this.initialInput) {
+      // Prefill from a landing page without firing an API call; the user hits
+      // Convert to get the AI explanation.
+      this.userInput = this.initialInput;
+    }
   },
   methods: {
     // --- Deep-linkable conversions -------------------------------------------
@@ -816,7 +831,11 @@ export default {
   margin-bottom: 2rem;
 }
 
-.input-section h2 {
+.input-section .form-title {
+  display: block;
+  font-size: 1.5rem;
+  font-weight: 600;
+  line-height: 1.2;
   color: var(--skoda-green);
   margin-bottom: 0.5rem;
   text-align: center;

@@ -25,7 +25,7 @@
 
 ## Phase tracker
 - [x] **Phase 0 — Foundation** (router + vite-ssg + SSR-safe i18n; build emits HTML)
-- [ ] **Phase 1 — Landing pages** (data-driven SEO pages reusing the converter)
+- [x] **Phase 1 — Landing pages** (data-driven SEO pages reusing the converter)
 - [ ] **Phase 2 — Structured data & discovery** (FAQ/WebSite JSON-LD, sitemap, links)
 - [ ] **Phase 3 — Copy & QA** (tighten messaging, verify prerendered HTML, redeploy)
 
@@ -60,17 +60,24 @@
 
 ## Phase 1 — Landing pages
 ### Tasks
-- [ ] Add `src/content/pages.js` catalog (~6–10 pages): category pages
-      (length / weight / area / power / price) + a few long-tail
-      (`hectare-in-skoda-fabias`, `football-field-in-skoda-fabias`, …).
-- [ ] `views/LandingView.vue`: unique `<h1>` + SEO intro + reuse `ConversionForm`
-      prefilled with the page's example (auto-convert) + internal links to other
-      pages and Home.
-- [ ] Per-page `useHead()` — title, meta description, canonical, og tags.
-- [ ] Register the catalog routes; `includedRoutes` enumerates all slugs.
+- [x] Added `src/content/pages.js` — `REFERENCES` (Fabia specs) + **8 pages**:
+      hectare / football-field / tennis-court / eiffel-tower / olympic-pool /
+      kilometer / elephant / blue-whale. Each has a unique title, description,
+      H1, intro and a value used to compute the answer statically.
+- [x] `views/LandingView.vue` (`<script setup>`): unique `<h1>`, a
+      **statically-computed answer** (`round(value / REFERENCES[type])`) baked
+      into the HTML, SEO intro, the reused `ConversionForm` **prefilled** with the
+      example (no auto API call), and internal links to the other pages + Home.
+- [x] Per-page `useHead()` — title, meta description, canonical, og/twitter tags.
+- [x] Routes generated from the catalog (`routes.js`); all 8 are static so
+      vite-ssg prerenders each to its own HTML file.
+- [x] **Heading hygiene:** demoted the Header brand from `<h1>` to a link, made
+      the converter title `<h1>` on Home / `<h2>` on landing (via `headingLevel`
+      prop) → exactly one `<h1>` per page.
 
-**Acceptance:** each landing URL returns static HTML with its own title/description/
-H1 and the answer text; pages interlink; build prerenders them all.
+**Acceptance:** met — `npm run build` emits 9 HTML files; each landing page's
+static source carries its own title/description/canonical/H1 and the computed
+"≈ N Škoda Fabias" answer; pages interlink; one `<h1>` each.
 
 ---
 
@@ -111,3 +118,9 @@ H1 and the answer text; pages interlink; build prerenders them all.
   `App.vue` is the layout, `HomeView` holds the converter+stats. i18n + SW made
   SSR-safe. `npm run build` (now `vite-ssg build`) prerenders `/` to 23 KB of
   real HTML; PWA still works. Next: Phase 1 — data-driven landing pages.
+- 2026-06-24 — Phase 1 done. `pages.js` catalog (8 long-tail pages) +
+  `LandingView.vue` reusing the converter with a statically-computed answer and
+  per-page `useHead`. Routes generated from the catalog; build emits 9 prerendered
+  HTML files. Fixed heading hierarchy to one `<h1>` per page (Header brand → link,
+  converter title `headingLevel` h1/h2). Next: Phase 2 — FAQ/WebSite JSON-LD,
+  sitemap, internal links from home/footer.

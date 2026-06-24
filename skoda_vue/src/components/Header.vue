@@ -5,7 +5,7 @@
         <div class="brand">
           <img src="/fabia-car.svg" alt="Škoda Fabia" class="logo">
           <div class="brand-text">
-            <h1>Škoda Fabia Converter</h1>
+            <router-link to="/" class="brand-title">Škoda Fabia Converter</router-link>
             <span class="tagline">{{ $t('header.tagline') }}</span>
           </div>
         </div>
@@ -287,11 +287,13 @@ export default {
   width: auto;
 }
 
-.brand-text h1 {
+.brand-text .brand-title {
+  display: block;
   font-size: 1.5rem;
   font-weight: 700;
   color: var(--skoda-green);
   margin: 0;
+  text-decoration: none;
 }
 
 .tagline {
@@ -405,7 +407,7 @@ export default {
 }
 
 @media (max-width: 768px) {
-  .brand-text h1 {
+  .brand-text .brand-title {
     font-size: 1.25rem;
   }
 
