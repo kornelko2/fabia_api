@@ -47,8 +47,8 @@
               v-model="selectedExplanationType"
               :disabled="loading"
             >
-              <option value="funny">🎉 {{ $t('form.funnyOption') }}</option>
-              <option value="scientific">🔬 {{ $t('form.scientificOption') }}</option>
+              <option value="funny">{{ $t('form.funnyOption') }}</option>
+              <option value="scientific">{{ $t('form.scientificOption') }}</option>
             </select>
           </div>
         </div>

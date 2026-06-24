@@ -128,9 +128,11 @@ Footer 13 · Header 13 · App.vue 9 (these 9 are language flags — see Phase 0)
 - [x] Remove now-unused emoji; `npm run build` passes.
 
 **Notes / intentional exceptions (not "decorative template emoji"):**
-- **Language flags** (🇨🇿 …) kept — Phase 0 decision.
-- **`<select>` `<option>` emoji** (🎉 funny / 🔬 scientific) kept — native option
-  elements can't render components. The visible **result badges** use icons.
+- **Language flags** (🇨🇿 …) kept — Phase 0 decision. Still present in the
+  Response Language `<select>` (native options can't render components).
+- **Explanation Style `<option>` emoji** (🎉 / 🔬) removed → plain text, since the
+  native dropdown can't render icons. The visible **result badges** use icons.
+  (Adding icons *inside* a dropdown needs a custom select — deferred to Phase 2.)
 - **Generated embed-HTML strings** (🚗/📊 inside `generateEmbed*()`) kept — that's
   third-party English-only output, polished in Phase 3, not app chrome.
 - **`getLanguageFlag()` `🌍` fallback** kept — consistent with keeping emoji flags.

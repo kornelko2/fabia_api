@@ -736,11 +736,15 @@ export default {
 .mini-btn {
   border: 1px solid #e0e0e0;
   background: #fff;
+  color: var(--skoda-green);
   border-radius: 4px;
   padding: 0.25rem 0.5rem;
   cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
 }
-.mini-btn:hover { border-color: var(--skoda-green); }
+.mini-btn:hover { border-color: var(--skoda-green); background: var(--skoda-green-light); }
 
 /* Embed dialog styles (reuse from ConversionForm) */
 .embed-dialog-overlay {
