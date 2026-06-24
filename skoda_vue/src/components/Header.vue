@@ -43,10 +43,10 @@
         <div class="nav-section">
           <h3>{{ $t('header.tools') }}</h3>
           <button @click="openEmbedDialog" class="nav-action">
-            🔗 {{ $t('header.embedCode') }}
+            <AppIcon :icon="Link2" /> {{ $t('header.embedCode') }}
           </button>
           <button @click="shareApp" class="nav-action">
-            📤 {{ $t('header.shareApp') }}
+            <AppIcon :icon="Share2" /> {{ $t('header.shareApp') }}
           </button>
         </div>
       </nav>
@@ -68,13 +68,13 @@
     <div v-if="showEmbedDialog" class="embed-overlay" @click="showEmbedDialog = false">
       <div class="embed-dialog" @click.stop>
         <div class="embed-dialog-header">
-          <h3>🔗 {{ $t('header.embedTitle') }}</h3>
-          <button @click="showEmbedDialog = false" class="close-btn" :aria-label="$t('common.close')">✕</button>
+          <h3><AppIcon :icon="Link2" :size="18" /> {{ $t('header.embedTitle') }}</h3>
+          <button @click="showEmbedDialog = false" class="close-btn" :aria-label="$t('common.close')"><AppIcon :icon="X" /></button>
         </div>
         <p>{{ $t('header.embedDesc') }}</p>
         <textarea class="embed-code" rows="5" readonly :value="embedCode" @focus="$event.target.select()"></textarea>
         <div class="embed-actions">
-          <button @click="copyEmbedCode" class="nav-action">📋 {{ $t('header.copyCode') }}</button>
+          <button @click="copyEmbedCode" class="nav-action"><AppIcon :icon="Copy" /> {{ $t('header.copyCode') }}</button>
           <button @click="showEmbedDialog = false" class="nav-action secondary">{{ $t('common.close') }}</button>
         </div>
       </div>
@@ -86,8 +86,15 @@
 </template>
 
 <script>
+import { Link2, Share2, Copy, X } from '@lucide/vue'
+import AppIcon from './AppIcon.vue'
+
 export default {
   name: 'AppHeader',
+  components: { AppIcon },
+  setup() {
+    return { Link2, Share2, Copy, X }
+  },
   props: {
     currentLanguage: {
       type: Object,

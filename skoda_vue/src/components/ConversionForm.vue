@@ -3,7 +3,7 @@
     <div class="container">
       <!-- Input Section -->
       <div class="input-section card">
-        <h2>🚗 {{ $t('form.title') }}</h2>
+        <h2><AppIcon :icon="Car" :size="24" /> {{ $t('form.title') }}</h2>
         <p class="section-description">{{ $t('form.description') }}</p>
 
         <div class="input-group">
@@ -18,7 +18,7 @@
             @keydown.meta.enter="handleConvert"
           ></textarea>
           <div class="input-hint">
-            🎯 {{ $t('form.hint') }}
+            <AppIcon :icon="Target" :size="16" /> {{ $t('form.hint') }}
           </div>
         </div>
         
@@ -59,7 +59,7 @@
           class="convert-btn"
         >
           <span v-if="loading" class="loading"></span>
-          <span v-else>�</span>
+          <AppIcon v-else :icon="ArrowRightLeft" :size="20" />
           {{ loading ? $t('form.converting') : $t('form.convert') }}
         </button>
       </div>
@@ -71,9 +71,12 @@
           <div class="result-header">
             <h3>{{ $t('result.title') }}</h3>
             <div class="result-meta">
-              <span class="explanation-badge">{{ result.explanationType === 'funny' ? '🎉 ' + $t('result.funnyBadge') : '🔬 ' + $t('result.scientificBadge') }}</span>
+              <span class="explanation-badge">
+                <AppIcon :icon="result.explanationType === 'funny' ? PartyPopper : FlaskConical" :size="14" />
+                {{ result.explanationType === 'funny' ? $t('result.funnyBadge') : $t('result.scientificBadge') }}
+              </span>
               <span class="language-badge">{{ getLanguageName(result.language) }}</span>
-              <span v-if="result.cached" class="cache-badge" :title="$t('result.cachedTitle')">⚡ {{ $t('result.cached') }}</span>
+              <span v-if="result.cached" class="cache-badge" :title="$t('result.cachedTitle')"><AppIcon :icon="Zap" :size="14" /> {{ $t('result.cached') }}</span>
             </div>
           </div>
           
@@ -84,7 +87,7 @@
 
             <div class="conversion-details" v-if="result.conversion">
               <div class="conversion-summary">
-                <strong>📊 {{ $t('result.conversion') }}</strong>
+                <strong><AppIcon :icon="ChartColumnBig" :size="16" /> {{ $t('result.conversion') }}</strong>
                 {{ result.conversion.inputValue }} {{ result.conversion.inputUnit }} =
                 <span class="fabia-result">{{ result.conversion.resultValue }} {{ $t('common.skodaFabias') }}</span>
               </div>
@@ -99,7 +102,7 @@
             
             <div v-if="result.explanation" class="explanation">
               <details>
-                <summary>📚 {{ $t('result.detailedExplanation') }}</summary>
+                <summary><AppIcon :icon="BookOpen" :size="16" /> {{ $t('result.detailedExplanation') }}</summary>
                 <div class="explanation-content" v-html="formatExplanation(result.explanation)"></div>
               </details>
             </div>
@@ -107,13 +110,13 @@
           
           <div class="result-actions">
             <button @click="copyResult" class="action-btn">
-              📋 {{ $t('result.copyResult') }}
+              <AppIcon :icon="Copy" :size="16" /> {{ $t('result.copyResult') }}
             </button>
             <button @click="shareResult" class="action-btn">
-              📤 {{ $t('result.share') }}
+              <AppIcon :icon="Share2" :size="16" /> {{ $t('result.share') }}
             </button>
             <button @click="generateEmbed" class="action-btn">
-              🔗 {{ $t('result.embedCode') }}
+              <AppIcon :icon="Link2" :size="16" /> {{ $t('result.embedCode') }}
             </button>
           </div>
         </div>
@@ -121,7 +124,7 @@
         <!-- Error State -->
         <div v-if="error" class="error-card card">
           <div class="error-header">
-            <h3>❌ {{ $t('error.title') }}</h3>
+            <h3><AppIcon :icon="CircleX" :size="20" /> {{ $t('error.title') }}</h3>
           </div>
           <div class="error-content">
             <p>{{ error }}</p>
@@ -141,7 +144,7 @@
       
       <!-- Quick Examples -->
       <div v-if="!result && !error && !loading" class="examples-section card">
-        <h3>🔧 {{ $t('examples.heading') }}</h3>
+        <h3><AppIcon :icon="Wrench" :size="20" /> {{ $t('examples.heading') }}</h3>
         <div class="conversion-categories">
           <div class="category">
             <h4>{{ $t('examples.areaSpace') }}</h4>
@@ -205,7 +208,7 @@
         </div>
         
         <div class="fabia-facts">
-          <h4>📏 {{ $t('examples.specsTitle') }}</h4>
+          <h4><AppIcon :icon="Ruler" :size="18" /> {{ $t('examples.specsTitle') }}</h4>
           <div class="specs-grid">
             <div class="spec-item">{{ $t('examples.specLength') }}: 4.002 m</div>
             <div class="spec-item">{{ $t('examples.specWidth') }}: 1.646 m</div>
@@ -222,7 +225,7 @@
         <div class="embed-dialog" @click.stop>
           <div class="embed-header">
             <h3>{{ $t('embed.title') }}</h3>
-            <button @click="closeEmbedDialog" class="close-btn">✕</button>
+            <button @click="closeEmbedDialog" class="close-btn" :aria-label="$t('common.close')"><AppIcon :icon="X" /></button>
           </div>
 
           <div class="embed-content">
@@ -267,7 +270,7 @@
           
           <div class="embed-actions">
             <button @click="copyEmbedCode" class="action-btn">
-              📋 {{ $t('embed.copyCode') }}
+              <AppIcon :icon="Copy" :size="16" /> {{ $t('embed.copyCode') }}
             </button>
             <button @click="closeEmbedDialog" class="action-btn secondary">
               {{ $t('common.cancel') }}
@@ -280,8 +283,21 @@
 </template>
 
 <script>
+import {
+  Car, Target, PartyPopper, FlaskConical, Zap, ChartColumnBig, BookOpen,
+  Copy, Share2, Link2, CircleX, Wrench, Ruler, ArrowRightLeft, X
+} from '@lucide/vue'
+import AppIcon from './AppIcon.vue'
+
 export default {
   name: 'ConversionForm',
+  components: { AppIcon },
+  setup() {
+    return {
+      Car, Target, PartyPopper, FlaskConical, Zap, ChartColumnBig, BookOpen,
+      Copy, Share2, Link2, CircleX, Wrench, Ruler, ArrowRightLeft, X
+    }
+  },
   props: {
     currentLanguage: {
       type: Object,

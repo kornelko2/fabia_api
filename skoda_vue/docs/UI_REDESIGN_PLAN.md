@@ -26,7 +26,7 @@ post it in chats and link it from their projects.
 
 ## Phase tracker
 - [x] **Phase 0 — Decide & set up the icon system** (blocking; do first)
-- [ ] **Phase 1 — Replace emoji with icons** (depends on Phase 0)
+- [x] **Phase 1 — Replace emoji with icons** (depends on Phase 0)
 - [ ] **Phase 2 — Simplify the UI (progressive disclosure)**
 - [ ] **Phase 3 — Shareability & engagement**
 - [ ] **Phase 4 — Polish, accessibility & QA**
@@ -113,21 +113,31 @@ Footer 13 · Header 13 · App.vue 9 (these 9 are language flags — see Phase 0)
 | 📐 | area | `Square` / `Ruler` |
 
 ### Tasks (by file)
-- [ ] **Header.vue** — menu Embed/Share, embed dialog, install prompt icons.
-- [ ] **ConversionForm.vue** — title, hint, style options, result badges,
-      conversion/explanation headers, action buttons, error, examples, specs.
-- [ ] **Footer.vue** — feature list, action buttons, live indicator, copyright
-      heart, GitHub mark is already an SVG (leave it).
-- [ ] **Statistics.vue** — section headers, refresh/loading, arrow, mini-buttons,
-      and refactor `getTypeIcon()` to return a **component** (not an emoji string).
-- [ ] Replace `getTypeIcon()` emoji map → map of Lucide components; render with
-      `<component :is="getTypeIcon(type)" />`.
-- [ ] Add `aria-label`/`title` to every icon-only button (a11y).
-- [ ] Remove now-unused emoji; `npm run build`; visual check each section.
+- [x] **Header.vue** — menu Embed/Share, embed dialog title, copy, close (X).
+- [x] **ConversionForm.vue** — title, hint, convert button (also fixed a corrupted
+      glyph), result badges, conversion/explanation headers, action buttons, error,
+      examples, specs, embed dialog copy/close.
+- [x] **Footer.vue** — feature list, action buttons, live indicator, modal close
+      buttons (added `aria-label`s). GitHub mark left as its existing SVG.
+- [x] **Statistics.vue** — section headers, refresh/loading spinner, both arrows,
+      overview stat icons, mini-buttons, details modal, embed dialog.
+- [x] Replace `getTypeIcon()` emoji map → `TYPE_ICONS` map of Lucide components;
+      render with `<AppIcon :icon="getTypeIcon(type)" />`.
+- [x] Add `aria-label`/`title` to every icon-only button (close buttons, stats
+      share/embed mini-buttons).
+- [x] Remove now-unused emoji; `npm run build` passes.
 
-**Acceptance criteria:** no decorative emoji left in templates (flags optionally
-kept), every icon-only control has an accessible label, build passes, bundle size
-sane (icons tree-shaken).
+**Notes / intentional exceptions (not "decorative template emoji"):**
+- **Language flags** (🇨🇿 …) kept — Phase 0 decision.
+- **`<select>` `<option>` emoji** (🎉 funny / 🔬 scientific) kept — native option
+  elements can't render components. The visible **result badges** use icons.
+- **Generated embed-HTML strings** (🚗/📊 inside `generateEmbed*()`) kept — that's
+  third-party English-only output, polished in Phase 3, not app chrome.
+- **`getLanguageFlag()` `🌍` fallback** kept — consistent with keeping emoji flags.
+
+**Acceptance criteria:** met — no decorative emoji left in app templates (flags +
+documented exceptions kept), icon-only controls have accessible labels, build
+passes, bundle +~3 kB gzip (icons tree-shaken).
 
 ---
 
@@ -256,3 +266,10 @@ interactive controls, clean responsive layout in every language.
   Conventions filled in above; keeping emoji flags. Lockfile changed (not yet
   committed). Next: Phase 1 — replace template emoji with icons, starting
   Header.vue (note `BarChart3` → `ChartColumnBig`).
+- 2026-06-24 — Phase 1 done. Replaced decorative emoji with Lucide icons across
+  Header / ConversionForm / Footer / Statistics via `<AppIcon :icon="…">`.
+  Refactored `getTypeIcon()` to return components (`TYPE_ICONS` map). Added
+  `aria-label`s to icon-only close/share/embed buttons; fixed a corrupted glyph
+  on the Convert button. Kept emoji flags, `<option>` emoji, and generated
+  embed-HTML emoji (documented). `npm run build` passes (+~3 kB gzip). Next:
+  Phase 2 — simplify the UI (progressive disclosure).

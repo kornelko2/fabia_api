@@ -1,23 +1,22 @@
 <template>
   <div class="statistics-section">
     <div class="stats-header">
-      <h3>📊 {{ $t('stats.title') }}</h3>
+      <h3><AppIcon :icon="ChartColumnBig" :size="22" /> {{ $t('stats.title') }}</h3>
       <button @click="refreshStats" class="refresh-btn" :disabled="loading">
-        <span v-if="loading" class="loading-spinner">🔄</span>
-        <span v-else>🔄</span>
+        <span :class="{ 'loading-spinner': loading }"><AppIcon :icon="RefreshCw" :size="16" /></span>
         {{ loading ? $t('stats.loading') : $t('stats.refresh') }}
       </button>
     </div>
 
     <!-- Loading State -->
     <div v-if="loading && !stats" class="loading-state">
-      <div class="loading-spinner">🔄</div>
+      <div class="loading-spinner"><AppIcon :icon="RefreshCw" :size="24" /></div>
       <p>{{ $t('stats.loadingStats') }}</p>
     </div>
 
     <!-- Error State -->
     <div v-if="error" class="error-state">
-      <p>❌ {{ error }}</p>
+      <p><AppIcon :icon="CircleX" :size="16" /> {{ error }}</p>
       <button @click="refreshStats" class="retry-btn">{{ $t('common.tryAgain') }}</button>
     </div>
 
@@ -26,25 +25,25 @@
       <!-- Overview Cards -->
       <div class="overview-cards">
         <div class="stat-card">
-          <div class="stat-icon">🚗</div>
+          <div class="stat-icon"><AppIcon :icon="Car" :size="32" /></div>
           <div class="stat-value">{{ stats.overview.totalUniqueConversions }}</div>
           <div class="stat-label">{{ $t('stats.uniqueConversions') }}</div>
         </div>
-        
+
         <div class="stat-card">
-          <div class="stat-icon">📈</div>
+          <div class="stat-icon"><AppIcon :icon="TrendingUp" :size="32" /></div>
           <div class="stat-value">{{ stats.overview.totalRequestsServed }}</div>
           <div class="stat-label">{{ $t('stats.totalRequestsServed') }}</div>
         </div>
-        
+
         <div class="stat-card">
-          <div class="stat-icon">⚡</div>
+          <div class="stat-icon"><AppIcon :icon="Zap" :size="32" /></div>
           <div class="stat-value">{{ stats.overview.cacheHitRate }}</div>
           <div class="stat-label">{{ $t('stats.cacheHitRate') }}</div>
         </div>
-        
+
         <div class="stat-card">
-          <div class="stat-icon">🔄</div>
+          <div class="stat-icon"><AppIcon :icon="RefreshCw" :size="32" /></div>
           <div class="stat-value">{{ stats.overview.averageReuseRate }}x</div>
           <div class="stat-label">{{ $t('stats.avgReuseRate') }}</div>
         </div>
@@ -52,12 +51,12 @@
 
       <!-- Conversion Types -->
       <div class="stats-section-item">
-        <h4>🎯 {{ $t('stats.popularTypes') }}</h4>
+        <h4><AppIcon :icon="Target" :size="18" /> {{ $t('stats.popularTypes') }}</h4>
         <div class="conversion-types">
           <div v-for="type in stats.conversionTypes" :key="type.measurement_type" class="type-item">
             <div class="type-info">
               <span class="type-name">{{ getTypeName(type.measurement_type) }}</span>
-              <span class="type-icon">{{ getTypeIcon(type.measurement_type) }}</span>
+              <span class="type-icon"><AppIcon :icon="getTypeIcon(type.measurement_type)" :size="18" /></span>
             </div>
             <div class="type-stats">
               <span class="unique-count">{{ type.count }} {{ $t('stats.unique') }}</span>
@@ -69,7 +68,7 @@
 
       <!-- Recent Conversions -->
       <div class="stats-section-item">
-        <h4>🕒 {{ $t('stats.recentTitle') }}</h4>
+        <h4><AppIcon :icon="Clock" :size="18" /> {{ $t('stats.recentTitle') }}</h4>
         <div class="recent-conversions">
           <div 
             v-for="(conversion, index) in stats.recentConversions.slice(0, 5)" 
@@ -82,7 +81,7 @@
               <strong class="highlight-number">{{ formatNumber(conversion.measurement_value) }}</strong> {{ conversion.measurement_unit }}
               <span class="conversion-type">{{ getTypeName(conversion.measurement_type) }}</span>
             </div>
-            <div class="conversion-arrow">→</div>
+            <div class="conversion-arrow"><AppIcon :icon="ArrowRight" :size="20" /></div>
             <div class="conversion-result">
               <strong class="highlight-number fabia-count">{{ formatNumber(conversion.result_value) }}</strong> {{ $t('common.skodaFabias') }}
               <span class="usage-count" v-if="conversion.usage_count > 1">
@@ -97,8 +96,8 @@
                 {{ formatTime(conversion.created_at) }}
               </div>
               <div class="conversion-actions">
-                <button class="mini-btn" @click.stop="shareConversion(conversion)" title="Share">📤</button>
-                <button class="mini-btn" @click.stop="openEmbedDialog(conversion)" title="Embed">🔗</button>
+                <button class="mini-btn" @click.stop="shareConversion(conversion)" :title="$t('result.share')" :aria-label="$t('result.share')"><AppIcon :icon="Share2" :size="16" /></button>
+                <button class="mini-btn" @click.stop="openEmbedDialog(conversion)" :title="$t('result.embedCode')" :aria-label="$t('result.embedCode')"><AppIcon :icon="Link2" :size="16" /></button>
               </div>
             </div>
           </div>
@@ -107,14 +106,14 @@
 
       <!-- Most Popular Conversions -->
       <div class="stats-section-item">
-        <h4>🏆 {{ $t('stats.mostRequested') }}</h4>
+        <h4><AppIcon :icon="Trophy" :size="18" /> {{ $t('stats.mostRequested') }}</h4>
         <div class="popular-conversions">
           <div v-for="(conversion, index) in stats.popularConversions" :key="conversion.created_at" class="popular-item">
             <div class="rank">{{ index + 1 }}</div>
             <div class="popular-content">
               <div class="popular-conversion">
                 <strong>{{ formatNumber(conversion.measurement_value) }} {{ conversion.measurement_unit }}</strong>
-                → <strong>{{ formatNumber(conversion.result_value) }} {{ $t('common.fabias') }}</strong>
+                <AppIcon :icon="ArrowRight" :size="16" /> <strong>{{ formatNumber(conversion.result_value) }} {{ $t('common.fabias') }}</strong>
               </div>
               <div class="popular-stats">
                 <span class="usage-badge">{{ conversion.usage_count }} {{ $t('stats.requests') }}</span>
@@ -122,8 +121,8 @@
                 <span class="lang-badge" :title="getLanguageName(conversion.language)">{{ getLanguageFlag(conversion.language) }}</span>
               </div>
               <div class="popular-actions">
-                <button class="mini-btn" @click.stop="shareConversion(conversion)" title="Share">📤</button>
-                <button class="mini-btn" @click.stop="openEmbedDialog(conversion)" title="Embed">🔗</button>
+                <button class="mini-btn" @click.stop="shareConversion(conversion)" :title="$t('result.share')" :aria-label="$t('result.share')"><AppIcon :icon="Share2" :size="16" /></button>
+                <button class="mini-btn" @click.stop="openEmbedDialog(conversion)" :title="$t('result.embedCode')" :aria-label="$t('result.embedCode')"><AppIcon :icon="Link2" :size="16" /></button>
               </div>
             </div>
           </div>
@@ -132,7 +131,7 @@
 
       <!-- Language Usage -->
       <div class="stats-section-item">
-        <h4>🌍 {{ $t('stats.languageUsage') }}</h4>
+        <h4><AppIcon :icon="Globe" :size="18" /> {{ $t('stats.languageUsage') }}</h4>
         <div class="language-stats">
           <div v-for="lang in stats.languageUsage" :key="lang.language" class="language-item">
             <div class="language-info">
@@ -149,7 +148,7 @@
 
       <!-- Last Updated -->
       <div class="stats-footer">
-        <small>📅 {{ $t('stats.lastUpdated', { time: formatTime(stats.lastUpdated) }) }}</small>
+        <small><AppIcon :icon="Calendar" :size="14" /> {{ $t('stats.lastUpdated', { time: formatTime(stats.lastUpdated) }) }}</small>
       </div>
     </div>
     
@@ -157,8 +156,8 @@
     <div v-if="selectedConversion" class="modal-overlay" @click="closeModal">
       <div class="modal-content" @click.stop>
         <div class="modal-header">
-          <h3>🚗 {{ $t('stats.detailsTitle') }}</h3>
-          <button @click="closeModal" class="close-btn">✕</button>
+          <h3><AppIcon :icon="Car" :size="20" /> {{ $t('stats.detailsTitle') }}</h3>
+          <button @click="closeModal" class="close-btn" :aria-label="$t('common.close')"><AppIcon :icon="X" /></button>
         </div>
 
         <div class="modal-body">
@@ -170,7 +169,7 @@
             </div>
             <div class="detail-item">
               <span class="detail-label">{{ $t('stats.type') }}</span>
-              <span class="detail-value">{{ getTypeName(selectedConversion.measurement_type) }} {{ getTypeIcon(selectedConversion.measurement_type) }}</span>
+              <span class="detail-value">{{ getTypeName(selectedConversion.measurement_type) }} <AppIcon :icon="getTypeIcon(selectedConversion.measurement_type)" :size="16" /></span>
             </div>
           </div>
 
@@ -226,7 +225,7 @@
       <div class="embed-dialog" @click.stop>
         <div class="embed-header">
           <h3>{{ $t('embed.title') }}</h3>
-          <button @click="showEmbedDialog = false" class="close-btn">✕</button>
+          <button @click="showEmbedDialog = false" class="close-btn" :aria-label="$t('common.close')"><AppIcon :icon="X" /></button>
         </div>
         <div class="embed-content">
           <div class="embed-options">
@@ -250,7 +249,7 @@
             <textarea v-model="embedCode" readonly rows="8" class="embed-code"></textarea>
           </div>
           <div class="embed-actions">
-            <button class="btn-primary" @click="copyEmbed">📋 {{ $t('embed.copyCode') }}</button>
+            <button class="btn-primary" @click="copyEmbed"><AppIcon :icon="Copy" :size="16" /> {{ $t('embed.copyCode') }}</button>
             <button class="btn-secondary" @click="showEmbedDialog = false">{{ $t('common.cancel') }}</button>
           </div>
         </div>
@@ -260,8 +259,33 @@
 </template>
 
 <script>
+import {
+  ChartColumnBig, RefreshCw, CircleX, Car, TrendingUp, Zap, Target, Clock,
+  ArrowRight, Share2, Link2, Trophy, Globe, Calendar, Copy, X,
+  Square, Scale, Ruler, Coins, MoveHorizontal, MoveVertical, Fuel
+} from '@lucide/vue'
+import AppIcon from './AppIcon.vue'
+
+const TYPE_ICONS = {
+  area: Square,
+  weight: Scale,
+  length: Ruler,
+  price: Coins,
+  width: MoveHorizontal,
+  height: MoveVertical,
+  power: Zap,
+  consumption: Fuel
+}
+
 export default {
   name: 'Statistics',
+  components: { AppIcon },
+  setup() {
+    return {
+      ChartColumnBig, RefreshCw, CircleX, Car, TrendingUp, Zap, Target, Clock,
+      ArrowRight, Share2, Link2, Trophy, Globe, Calendar, Copy, X
+    }
+  },
   data() {
     return {
       stats: null,
@@ -316,17 +340,9 @@ export default {
     },
     
     getTypeIcon(type) {
-      const icons = {
-        'area': '📐',
-        'weight': '⚖️',
-        'length': '📏',
-        'price': '💰',
-        'width': '↔️',
-        'height': '↕️',
-        'power': '⚡',
-        'consumption': '⛽'
-      };
-      return icons[type] || '📊';
+      // Returns a Lucide icon *component* (not an emoji); render with
+      // <AppIcon :icon="getTypeIcon(type)" />. Falls back to a chart icon.
+      return TYPE_ICONS[type] || ChartColumnBig;
     },
     
     getFabiaReference(type) {

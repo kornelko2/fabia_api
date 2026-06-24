@@ -11,7 +11,7 @@
           
           <div class="footer-stats" v-if="stats">
             <div class="stats-header">
-              <span class="live-indicator" v-if="usingRealData">🔴 {{ $t('footer.live') }}</span>
+              <span class="live-indicator" v-if="usingRealData"><AppIcon :icon="Radio" :size="14" /> {{ $t('footer.live') }}</span>
             </div>
             <div class="stats-grid">
               <div class="stat-item">
@@ -49,12 +49,12 @@
         <div class="footer-section">
           <h4>{{ $t('footer.features') }}</h4>
           <ul class="feature-list">
-            <li>🚗 {{ $t('footer.feature1') }}</li>
-            <li>🧠 {{ $t('footer.feature2') }}</li>
-            <li>🌍 {{ $t('footer.feature3') }}</li>
-            <li>📱 {{ $t('footer.feature4') }}</li>
-            <li>⚡ {{ $t('footer.feature5') }}</li>
-            <li>🎯 {{ $t('footer.feature6') }}</li>
+            <li><AppIcon :icon="Car" :size="16" /> {{ $t('footer.feature1') }}</li>
+            <li><AppIcon :icon="BrainCircuit" :size="16" /> {{ $t('footer.feature2') }}</li>
+            <li><AppIcon :icon="Globe" :size="16" /> {{ $t('footer.feature3') }}</li>
+            <li><AppIcon :icon="Smartphone" :size="16" /> {{ $t('footer.feature4') }}</li>
+            <li><AppIcon :icon="Zap" :size="16" /> {{ $t('footer.feature5') }}</li>
+            <li><AppIcon :icon="Target" :size="16" /> {{ $t('footer.feature6') }}</li>
           </ul>
         </div>
         
@@ -63,13 +63,13 @@
           <h4>{{ $t('footer.getStarted') }}</h4>
           <div class="footer-actions">
             <button @click="scrollToTop" class="footer-btn primary">
-              ⬆️ {{ $t('footer.startConverting') }}
+              <AppIcon :icon="ArrowUp" :size="16" /> {{ $t('footer.startConverting') }}
             </button>
             <button @click="installApp" class="footer-btn secondary" v-if="canInstall">
-              📱 {{ $t('footer.installApp') }}
+              <AppIcon :icon="Smartphone" :size="16" /> {{ $t('footer.installApp') }}
             </button>
             <button @click="shareApp" class="footer-btn secondary">
-              📤 {{ $t('footer.shareApp') }}
+              <AppIcon :icon="Share2" :size="16" /> {{ $t('footer.shareApp') }}
             </button>
           </div>
           
@@ -159,7 +159,7 @@
       <div class="modal" @click.stop>
         <div class="modal-header">
           <h3>{{ $t('about.title') }}</h3>
-          <button @click="showAbout = false" class="close-btn">✕</button>
+          <button @click="showAbout = false" class="close-btn" :aria-label="$t('common.close')"><AppIcon :icon="X" /></button>
         </div>
         <div class="modal-content">
           <p>{{ $t('about.intro') }}</p>
@@ -205,7 +205,7 @@
       <div class="modal" @click.stop>
         <div class="modal-header">
           <h3>{{ $t('privacy.title') }}</h3>
-          <button @click="showPrivacy = false" class="close-btn">✕</button>
+          <button @click="showPrivacy = false" class="close-btn" :aria-label="$t('common.close')"><AppIcon :icon="X" /></button>
         </div>
         <div class="modal-content">
           <h4>{{ $t('privacy.collectionTitle') }}</h4>
@@ -243,7 +243,7 @@
       <div class="modal" @click.stop>
         <div class="modal-header">
           <h3>{{ $t('help.title') }}</h3>
-          <button @click="showHelp = false" class="close-btn">✕</button>
+          <button @click="showHelp = false" class="close-btn" :aria-label="$t('common.close')"><AppIcon :icon="X" /></button>
         </div>
         <div class="modal-content">
           <h4>{{ $t('help.howToTitle') }}</h4>
@@ -285,8 +285,15 @@
 </template>
 
 <script>
+import { Radio, Car, BrainCircuit, Globe, Smartphone, Zap, Target, ArrowUp, Share2, X } from '@lucide/vue'
+import AppIcon from './AppIcon.vue'
+
 export default {
   name: 'AppFooter',
+  components: { AppIcon },
+  setup() {
+    return { Radio, Car, BrainCircuit, Globe, Smartphone, Zap, Target, ArrowUp, Share2, X }
+  },
   data() {
     return {
       showAbout: false,
