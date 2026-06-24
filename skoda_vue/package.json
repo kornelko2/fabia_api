@@ -6,7 +6,8 @@
   "scripts": {
     "dev": "vite",
     "build": "vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "og-image": "node scripts/make-og-image.mjs"
   },
   "dependencies": {
     "@lucide/vue": "^1.21.0",
@@ -19,6 +20,7 @@
   },
   "devDependencies": {
     "@vitejs/plugin-vue": "^6.0.1",
+    "sharp": "^0.35.2",
     "vite": "^7.1.7"
   }
 }

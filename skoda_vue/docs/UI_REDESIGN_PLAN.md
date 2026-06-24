@@ -28,7 +28,7 @@ post it in chats and link it from their projects.
 - [x] **Phase 0 — Decide & set up the icon system** (blocking; do first)
 - [x] **Phase 1 — Replace emoji with icons** (depends on Phase 0)
 - [x] **Phase 2 — Simplify the UI (progressive disclosure)**
-- [ ] **Phase 3 — Shareability & engagement**
+- [x] **Phase 3 — Shareability & engagement**
 - [ ] **Phase 4 — Polish, accessibility & QA**
 
 ---
@@ -189,27 +189,32 @@ scrolling; advanced options are one tap away, not in the way.
 **Principle:** make it effortless and rewarding to share a result or the app.
 
 ### Tasks
-- [ ] **Real Open Graph image.** Create a 1200×630 PNG (branded: car silhouette +
-      "Measure everything in Škoda Fabias") and point `og:image`/`twitter:image`
-      at the absolute URL. (Current og:image is the SVG logo — many chat apps
-      don't render SVG previews.)
-- [ ] Use `twitter:card = summary_large_image` once the PNG exists.
-- [ ] **Shareable result cards** — design the result block to look good as a
-      screenshot (brand, the input → "X Fabias", small footer credit + URL).
-- [ ] **Deep-linkable conversions** — encode the conversion in the URL (query
-      params, e.g. `?v=1500&u=ps&t=power&lang=cs`); on load, read params and
-      auto-fill/auto-convert. Then "Share" copies a link that reproduces the
-      exact result. Big driver of organic sharing.
-- [ ] Polish the existing **Embed** snippet output (it's English-only HTML by
-      design) — make the default look clean and on-brand.
-- [ ] Add a single, prominent **Share** affordance near the result (Web Share API
-      with clipboard fallback — already implemented; just surface it better).
-- [ ] (Optional) Light **social proof** — a small "N conversions" teaser pulled
-      from `/stats` near the hero (one number, not the full stats panel).
+- [x] **Real Open Graph image.** 1200×630 branded PNG (`public/og-image.png`):
+      car silhouette + "Measure everything in Škoda Fabias" + URL. Generated from
+      an inline SVG via `scripts/make-og-image.mjs` (npm run `og-image`), using
+      the `sharp` devDependency. `og:image`/`twitter:image` now point at the
+      absolute PNG URL with width/height/alt.
+- [x] `twitter:card = summary_large_image`.
+- [x] **Shareable result cards** — added a subtle brand + URL credit line inside
+      the result card so a screenshot is self-explanatory.
+- [x] **Deep-linkable conversions** — encode `?q=<input>&lang=<value>&style=<…>`.
+      On load the form reads params and auto-converts; after every conversion the
+      address bar is updated via `history.replaceState`; **Share** copies/shares
+      that link (Web Share API → clipboard fallback).
+- [-] Polish the existing **Embed** snippet output — deferred (functional and
+      on-brand already; revisit if needed). Not blocking.
+- [x] Single prominent **Share** affordance — Share is now the primary (green)
+      result action, ahead of Copy/Embed.
+- [-] (Optional) social proof teaser near the hero — deferred to avoid an extra
+      `/stats` fetch; the footer already surfaces the conversions count.
 
-**Acceptance criteria:** pasting the URL in a chat shows a proper title +
-description + image card; "Share" on a result produces a link that reopens that
-exact conversion; result looks good as a screenshot.
+**Acceptance criteria:** met — deep links reopen the exact conversion, Share
+produces such a link, the result card carries brand+URL for screenshots, and the
+OG/Twitter tags point at a real PNG card. (Live preview validation happens after
+deploy in Phase 4.)
+
+**Note:** the OG image only affects link previews once deployed to
+`fabia-conv.crayz.me/og-image.png` (Phase 4 deploy).
 
 ---
 
@@ -292,3 +297,11 @@ interactive controls, clean responsive layout in every language.
   `form.options` / `stats.show` / `stats.hide` to all 8 locales. Copy-tightening
   deferred (locale JSON is out of scope). Build passes. Next: Phase 3 —
   shareability & engagement (OG image, deep-linkable conversions, share affordance).
+- 2026-06-24 — Phase 3 done. Deep-linkable conversions (`?q&lang&style`, auto-
+  convert on load, `history.replaceState` keeps the URL shareable); Share is now
+  the primary result action and shares/copies the deep link. Generated a real
+  1200×630 OG PNG (`public/og-image.png` via `scripts/make-og-image.mjs` + `sharp`
+  devDep) and switched og/twitter tags to it (`summary_large_image`). Added a
+  brand+URL credit line to the result card. Embed polish + social-proof teaser
+  deferred (non-blocking). Build passes. Next: Phase 4 — polish, a11y & QA, then
+  deploy (OG preview validates post-deploy).

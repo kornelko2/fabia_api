@@ -111,14 +111,19 @@
                 <div class="explanation-content" v-html="formatExplanation(result.explanation)"></div>
               </details>
             </div>
+
+            <!-- Branding so a screenshot of the result is self-explanatory -->
+            <div class="result-credit">
+              <AppIcon :icon="Car" :size="16" /> Škoda Fabia Converter · fabia-conv.crayz.me
+            </div>
           </div>
-          
+
           <div class="result-actions">
+            <button @click="shareResult" class="action-btn primary">
+              <AppIcon :icon="Share2" :size="16" /> {{ $t('result.share') }}
+            </button>
             <button @click="copyResult" class="action-btn">
               <AppIcon :icon="Copy" :size="16" /> {{ $t('result.copyResult') }}
-            </button>
-            <button @click="shareResult" class="action-btn">
-              <AppIcon :icon="Share2" :size="16" /> {{ $t('result.share') }}
             </button>
             <button @click="generateEmbed" class="action-btn">
               <AppIcon :icon="Link2" :size="16" /> {{ $t('result.embedCode') }}
@@ -380,7 +385,53 @@ export default {
       immediate: true
     }
   },
+  mounted() {
+    this.applyDeepLink();
+  },
   methods: {
+    // --- Deep-linkable conversions -------------------------------------------
+    // A conversion is fully reproducible from the raw input + language + style.
+    // We encode those as query params so a shared link reopens the exact result.
+    applyDeepLink() {
+      const params = new URLSearchParams(window.location.search);
+      const q = params.get('q');
+      if (!q) return;
+
+      this.userInput = q;
+
+      const lang = params.get('lang');
+      if (lang && this.languages.some(l => l.value === lang)) {
+        this.selectedLanguage = lang;
+      }
+      const style = params.get('style');
+      if (style === 'funny' || style === 'scientific') {
+        this.selectedExplanationType = style;
+      }
+
+      // Auto-run the conversion so the link reproduces the result on open.
+      this.handleConvert();
+    },
+
+    buildShareUrl() {
+      const base = window.location.origin + window.location.pathname;
+      const params = new URLSearchParams({
+        q: this.result ? this.result.original_request : this.userInput.trim(),
+        lang: this.selectedLanguage,
+        style: this.selectedExplanationType
+      });
+      return `${base}?${params.toString()}`;
+    },
+
+    // Keep the address bar in sync with the current result so it's always
+    // shareable (without adding a new history entry per conversion).
+    syncUrlToResult() {
+      try {
+        window.history.replaceState(null, '', this.buildShareUrl());
+      } catch (err) {
+        console.warn('Could not update URL:', err);
+      }
+    },
+
     parseUserInput(input) {
       // Clean the input - remove extra spaces and normalize
       const cleanInput = input.trim().replace(/\s+/g, ' ');
@@ -530,7 +581,10 @@ export default {
           explanationType: this.selectedExplanationType,
           language: this.selectedLanguage
         };
-        
+
+        // Reflect this conversion in the URL so it can be shared / reopened.
+        this.syncUrlToResult();
+
         // Scroll to results
         this.$nextTick(() => {
           const resultsSection = document.querySelector('.results-section');
@@ -602,21 +656,30 @@ export default {
     },
     
     async shareResult() {
-      const conversionText = this.result.conversion ? 
+      const conversionText = this.result.conversion ?
         `${this.result.conversion.inputValue} ${this.result.conversion.inputUnit} = ${this.result.conversion.resultValue} Škoda Fabias\n` : '';
       const text = `${this.result.original_request}\n\n${conversionText}${this.result.aiResponse || this.result.result || ''}\n\nPowered by Fabia Converter`;
-      
+      const shareUrl = this.buildShareUrl();
+
       if (navigator.share) {
         try {
           await navigator.share({
             title: this.$t('result.title'),
             text: text,
-            url: window.location.href
+            url: shareUrl
           });
+          return;
         } catch (err) {
-          console.log('Share cancelled');
+          // AbortError = user dismissed the sheet; otherwise fall back to copy.
+          if (err && err.name === 'AbortError') return;
         }
-      } else {
+      }
+      // Fallback: copy a link that reproduces this exact conversion.
+      try {
+        await navigator.clipboard.writeText(shareUrl);
+        this.showToast(this.$t('header.toastLinkCopied'));
+      } catch (err) {
+        console.error('Failed to copy share link:', err);
         await this.copyResult();
       }
     },
@@ -952,6 +1015,18 @@ export default {
   line-height: 1.6;
 }
 
+.result-credit {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  margin-top: 1rem;
+  padding-top: 0.75rem;
+  border-top: 1px solid #eee;
+  color: #999;
+  font-size: 0.8125rem;
+  font-weight: 600;
+}
+
 .result-actions {
   display: flex;
   gap: 0.5rem;
@@ -974,6 +1049,19 @@ export default {
   background: var(--skoda-green-light);
   border-color: var(--skoda-green);
   color: var(--skoda-green);
+}
+
+.action-btn.primary {
+  background: var(--skoda-green);
+  color: white;
+  border-color: var(--skoda-green);
+  font-weight: 700;
+}
+
+.action-btn.primary:hover {
+  background: var(--skoda-green-dark);
+  border-color: var(--skoda-green-dark);
+  color: white;
 }
 
 .action-btn.secondary {
